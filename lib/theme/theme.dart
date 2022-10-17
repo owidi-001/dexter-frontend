@@ -1,3 +1,4 @@
+import 'package:dexter/utils/status.dart';
 import 'package:flutter/material.dart';
 
 class AppTheme {
@@ -8,4 +9,11 @@ class AppTheme {
   static const Color white = Colors.white;
 
   static const Color secondary = Colors.black54;
+
+  static const Map<Enum, Color> typeColor = {
+    MessageTypes.success: Colors.green,
+    MessageTypes.failure: Colors.red,
+    MessageTypes.informative: Colors.blue,
+    MessageTypes.warning: Colors.amberAccent
+  };
 }

@@ -4,3 +4,6 @@ enum ServiceLoadStatus {
   loadingFailure,
   loadingSuccess,
 }
+
+
+enum MessageTypes { success, failure, informative, warning }
