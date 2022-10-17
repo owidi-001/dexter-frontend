@@ -1,9 +1,15 @@
+import 'package:dexter/providers/image_picker_provider.dart';
+import 'package:dexter/screens/new/components/card_image.dart';
+import 'package:dexter/screens/new/components/image_picker.dart';
 import 'package:dexter/theme/theme.dart';
+import 'package:dexter/utils/status.dart';
 import 'package:dexter/widgets/combo_box_widget.dart';
 import 'package:dexter/widgets/form_field_decorator.dart';
 import 'package:dexter/widgets/show_message_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 class NewScreen extends StatefulWidget {
   const NewScreen({Key? key}) : super(key: key);
@@ -31,6 +37,8 @@ class _NewScreenState extends State<NewScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final imagePickerProvider = Provider.of<ImagePickerProvider>(context);
+
     // name field
     final nameField = TextFormField(
       autofocus: false,
@@ -102,31 +110,49 @@ class _NewScreenState extends State<NewScreen> {
     return Center(
         child: SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.all(24.0),
+        padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
         child: Form(
           key: _formkey,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              SizedBox(
-                height: 60,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const <Widget>[
-                    Text(
-                      "Create new",
-                      style: TextStyle(
-                          color: AppTheme.dark,
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
+              const SizedBox(
+                height: 32,
               ),
-              uploadButton(
-                  "Upload Image", uploadImage, Icons.add_a_photo_rounded),
+
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: const <Widget>[
+                  Text(
+                    "Create new",
+                    style: TextStyle(
+                        color: AppTheme.dark,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 32,
+              ),
+              // CardImage(
+              //   path: imgPath,
+              //   onTapCallback: () {
+              //     uploadImage;
+              //   },
+              // ),
+              imagePickerProvider.pickStatus != ServiceLoadStatus.loadingSuccess
+                  ? Container()
+                  : CardImage(
+                      file: imagePickerProvider.file,
+                      onTapCallback: uploadImage),
+              imagePickerProvider.pickStatus != ServiceLoadStatus.loadingSuccess
+                  ? uploadButton(
+                      "Upload Image", uploadImage, Icons.add_a_photo_rounded)
+                  : uploadButton(
+                      "Change Image", uploadImage, Icons.add_a_photo_rounded),
               const SizedBox(
                 height: 32,
               ),
@@ -216,6 +242,8 @@ class _NewScreenState extends State<NewScreen> {
   // Upload image handle
   void uploadImage() {
     showModalBottomSheet(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
         enableDrag: true,
         context: context,
         builder: (context) {
@@ -243,18 +271,30 @@ class _NewScreenState extends State<NewScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     InkWell(
-                      onTap: (() {}),
+                      onTap: (() {
+                        pickImage(ImageSource.gallery);
+                        Navigator.pop(context);
+                      }),
                       child: const CircleAvatar(
                           radius: 36,
                           backgroundColor: AppTheme.gradient,
-                          child: Icon(Icons.photo,color: AppTheme.primary,)),
+                          child: Icon(
+                            Icons.photo,
+                            color: AppTheme.primary,
+                          )),
                     ),
                     InkWell(
-                      onTap: (() {}),
+                      onTap: (() {
+                        pickImage(ImageSource.camera);
+                        Navigator.pop(context);
+                      }),
                       child: const CircleAvatar(
                           radius: 36,
                           backgroundColor: AppTheme.gradient,
-                          child: Icon(Icons.camera_alt_rounded,color: AppTheme.primary,)),
+                          child: Icon(
+                            Icons.camera_alt_rounded,
+                            color: AppTheme.primary,
+                          )),
                     ),
                   ],
                 ),

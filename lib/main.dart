@@ -1,8 +1,14 @@
+import 'package:dexter/providers/image_picker_provider.dart';
 import 'package:dexter/widgets/bottomNavigationWidget.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (_) => ImagePickerProvider()),
+    ],
+    child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -12,7 +18,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Dexter app',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
