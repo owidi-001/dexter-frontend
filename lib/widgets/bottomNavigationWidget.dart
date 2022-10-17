@@ -24,7 +24,7 @@ class _BottomNavigationWidgetState extends State<BottomNavigationWidget> {
             color: AppTheme.primary,
             fontWeight: FontWeight.w400,
             fontSize: 12)),
-    TabItem(Icons.create_new_folder_outlined, "New", AppTheme.primary,
+    TabItem(Icons.add_box_rounded, "New", AppTheme.primary,
         labelStyle: const TextStyle(
             color: AppTheme.primary,
             fontWeight: FontWeight.w400,
