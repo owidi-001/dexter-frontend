@@ -1,6 +1,6 @@
 import 'package:dexter/utils/status.dart';
 
-class NotificationMessage {
+class Message {
   int id;
   String title;
   String description;
@@ -8,7 +8,7 @@ class NotificationMessage {
   String time;
   MessageTypes type; // Success, failure, informative, warning
 
-  NotificationMessage(
+  Message(
       {required this.id,
       required this.title,
       required this.description,
@@ -16,113 +16,113 @@ class NotificationMessage {
       required this.time,
       required this.type});
 
-  static List<NotificationMessage> notifications = [
-    NotificationMessage(
+  static List<Message> notifications = [
+    Message(
         id: 1,
         title: "Restock boots",
         description: "You have only 4 boots remaining",
         sorted: true,
         time: "Sep 2/22 1000hrs",
         type: MessageTypes.warning),
-    NotificationMessage(
+    Message(
         id: 2,
         title: "Restock boots",
         description: "You have only 4 boots remaining",
         sorted: false,
         time: "Sep 2/22 1000hrs",
         type: MessageTypes.success),
-    NotificationMessage(
+    Message(
         id: 3,
         title: "Restock boots",
         description: "You have only 4 boots remaining",
         sorted: true,
         time: "Sep 2/22 1000hrs",
         type: MessageTypes.informative),
-    NotificationMessage(
+    Message(
         id: 4,
         title: "Restock boots",
         description: "You have only 4 boots remaining",
         sorted: false,
         time: "Sep 2/22 1000hrs",
         type: MessageTypes.warning),
-    NotificationMessage(
+    Message(
         id: 5,
         title: "Restock boots",
         description: "You have only 4 boots remaining",
         sorted: false,
         time: "Sep 2/22 1000hrs",
         type: MessageTypes.failure),
-    NotificationMessage(
+    Message(
         id: 6,
         title: "Restock boots",
         description: "You have only 4 boots remaining",
         sorted: true,
         time: "Sep 2/22 1000hrs",
         type: MessageTypes.warning),
-    NotificationMessage(
+    Message(
         id: 7,
         title: "Restock boots",
         description: "You have only 4 boots remaining",
         sorted: false,
         time: "Sep 2/22 1000hrs",
         type: MessageTypes.success),
-    NotificationMessage(
+    Message(
         id: 8,
         title: "Restock boots",
         description: "You have only 4 boots remaining",
         sorted: true,
         time: "Sep 2/22 1000hrs",
         type: MessageTypes.informative),
-    NotificationMessage(
+    Message(
         id: 1,
         title: "Restock boots",
         description: "You have only 4 boots remaining",
         sorted: true,
         time: "Sep 2/22 1000hrs",
         type: MessageTypes.warning),
-    NotificationMessage(
+    Message(
         id: 2,
         title: "Restock boots",
         description: "You have only 4 boots remaining",
         sorted: false,
         time: "Sep 2/22 1000hrs",
         type: MessageTypes.success),
-    NotificationMessage(
+    Message(
         id: 3,
         title: "Restock boots",
         description: "You have only 4 boots remaining",
         sorted: true,
         time: "Sep 2/22 1000hrs",
         type: MessageTypes.informative),
-    NotificationMessage(
+    Message(
         id: 4,
         title: "Restock boots",
         description: "You have only 4 boots remaining",
         sorted: false,
         time: "Sep 2/22 1000hrs",
         type: MessageTypes.warning),
-    NotificationMessage(
+    Message(
         id: 5,
         title: "Restock boots",
         description: "You have only 4 boots remaining",
         sorted: false,
         time: "Sep 2/22 1000hrs",
         type: MessageTypes.failure),
-    NotificationMessage(
+    Message(
         id: 6,
         title: "Restock boots",
         description: "You have only 4 boots remaining",
         sorted: true,
         time: "Sep 2/22 1000hrs",
         type: MessageTypes.warning),
-    NotificationMessage(
+    Message(
         id: 7,
         title: "Restock boots",
         description: "You have only 4 boots remaining",
         sorted: false,
         time: "Sep 2/22 1000hrs",
         type: MessageTypes.success),
-    NotificationMessage(
+    Message(
         id: 8,
         title: "Restock boots",
         description: "You have only 4 boots remaining",

@@ -1,14 +1,18 @@
+import 'package:dexter/providers/auth_provider.dart';
 import 'package:dexter/providers/image_picker_provider.dart';
+import 'package:dexter/providers/message_provider.dart';
+import 'package:dexter/providers/product_provider.dart';
 import 'package:dexter/widgets/bottomNavigationWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(MultiProvider(
-    providers: [
-      ChangeNotifierProvider(create: (_) => ImagePickerProvider()),
-    ],
-    child: const MyApp()));
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (_) => ImagePickerProvider()),
+    ChangeNotifierProvider(create: (_) => AuthenticationProvider.instance),
+    ChangeNotifierProvider(create: (_) => ProductProvider.instance),
+    ChangeNotifierProvider(create: (_) => MessageProvider.instance),
+  ], child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {

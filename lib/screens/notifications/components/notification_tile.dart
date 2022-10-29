@@ -1,10 +1,10 @@
-import 'package:dexter/models/notification_model.dart';
+import 'package:dexter/models/message_model.dart';
 import 'package:dexter/theme/theme.dart';
 import 'package:dexter/utils/status.dart';
 import 'package:flutter/material.dart';
 
 class NotificationTile extends StatefulWidget {
-  final NotificationMessage notification;
+  final Message notification;
   final Function() onTapCallback;
 
   const NotificationTile(

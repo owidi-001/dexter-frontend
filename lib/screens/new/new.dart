@@ -143,12 +143,12 @@ class _NewScreenState extends State<NewScreen> {
               //     uploadImage;
               //   },
               // ),
-              imagePickerProvider.pickStatus != ServiceLoadStatus.loadingSuccess
+              imagePickerProvider.pickStatus != LoadingStatus.loadingSuccess
                   ? Container()
                   : CardImage(
                       file: imagePickerProvider.file,
                       onTapCallback: uploadImage),
-              imagePickerProvider.pickStatus != ServiceLoadStatus.loadingSuccess
+              imagePickerProvider.pickStatus != LoadingStatus.loadingSuccess
                   ? uploadButton(
                       "Upload Image", uploadImage, Icons.add_a_photo_rounded)
                   : uploadButton(

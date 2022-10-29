@@ -1,11 +1,11 @@
-import 'package:dexter/models/notification_model.dart';
+import 'package:dexter/models/message_model.dart';
 import 'package:dexter/screens/notifications/components/notification_tile.dart';
 import 'package:dexter/screens/notifications/components/notification_top_widget.dart';
 import 'package:dexter/theme/theme.dart';
 import 'package:flutter/material.dart';
 
 class NotificationsScreen extends StatelessWidget {
-  List<NotificationMessage> notifications = NotificationMessage.notifications;
+  List<Message> notifications = Message.notifications;
 
   @override
   Widget build(BuildContext context) {

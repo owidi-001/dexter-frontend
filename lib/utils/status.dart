@@ -1,9 +1,15 @@
-enum ServiceLoadStatus {
+enum AuthenticationStatus {
   unknown,
-  loading,
-  loadingFailure,
-  loadingSuccess,
+  authenticating,
+  authenticated,
+  unAuthenticated
 }
 
+enum LoadingStatus{
+  unknown,
+  loading,
+  loadingSuccess,
+  loadingFailure
+}
 
 enum MessageTypes { success, failure, informative, warning }

@@ -4,7 +4,7 @@ import 'package:image_picker/image_picker.dart';
 
 class ImagePickerProvider with ChangeNotifier {
   late XFile _file;
-  ServiceLoadStatus pickStatus = ServiceLoadStatus.unknown;
+  LoadingStatus pickStatus = LoadingStatus.unknown;
 
   XFile get file => _file;
 
@@ -19,7 +19,7 @@ class ImagePickerProvider with ChangeNotifier {
       print("Image saved to provider is ${file.path}");
     }
 
-    pickStatus = ServiceLoadStatus.loadingSuccess;
+    pickStatus = LoadingStatus.loadingSuccess;
     notifyListeners();
   }
 }
