@@ -25,6 +25,7 @@ class AuthenticationProvider with ChangeNotifier {
     // Save to shared prefs
     LoginData data = LoginData(user: user);
 
+    // TODO! re-evaluate for elevated rights
     //save user
     UserPreferences().storeLoginData(data);
   }

@@ -4,7 +4,7 @@ class Utils {
   static String convertDateFromString(
       String dateToConvert, String formatString) {
     DateTime convertedDate = DateTime.parse(dateToConvert);
-    var formatter = new DateFormat(formatString);
+    var formatter = DateFormat(formatString);
     return formatter.format(convertedDate);
   }
 
@@ -20,11 +20,10 @@ class Utils {
     }
 
     for (int i = 0; i < newPhrase.length; i++) {
-      result += newPhrase[i] + " ";
+      result += "${newPhrase[i]} ";
     }
 
     return result;
   }
-
   
 }

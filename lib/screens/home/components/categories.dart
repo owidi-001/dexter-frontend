@@ -11,9 +11,16 @@ class Categories extends StatefulWidget {
 }
 
 class _CategoriesState extends State<Categories> {
-  static List<String> categories = ["All","Boots", "Bags", "Socks", "Dresses","Cardigans"];
+  static List<String> categories = [
+    "All",
+    "Boots",
+    "Bags",
+    "Socks",
+    "Dresses",
+    "Cardigans"
+  ];
   static int selectedIndex = 0;
-  
+
   @override
   Widget build(BuildContext context) {
     return Padding(

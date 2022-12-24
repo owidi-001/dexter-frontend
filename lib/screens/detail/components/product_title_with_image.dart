@@ -25,7 +25,7 @@ class ProductTitleWithImage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  product.getCategory(),
+                  product.type,
                   style: const TextStyle(color: AppTheme.white),
                 ),
                 Text(

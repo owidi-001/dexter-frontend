@@ -1,8 +1,7 @@
 import 'package:circular_bottom_navigation/circular_bottom_navigation.dart';
 import 'package:circular_bottom_navigation/tab_item.dart';
 import 'package:dexter/screens/home/home.dart';
-import 'package:dexter/screens/new/new.dart';
-import 'package:dexter/screens/notifications/notifications.dart';
+import 'package:dexter/screens/manage/all_products.dart';
 import 'package:dexter/theme/theme.dart';
 import 'package:flutter/material.dart';
 
@@ -24,12 +23,7 @@ class _BottomNavigationWidgetState extends State<BottomNavigationWidget> {
             color: AppTheme.primary,
             fontWeight: FontWeight.w400,
             fontSize: 12)),
-    TabItem(Icons.add_box_rounded, "New", AppTheme.primary,
-        labelStyle: const TextStyle(
-            color: AppTheme.primary,
-            fontWeight: FontWeight.w400,
-            fontSize: 12)),
-    TabItem(Icons.notifications, "Notifications", AppTheme.primary,
+    TabItem(Icons.dashboard_customize_rounded, "Manage", AppTheme.primary,
         labelStyle: const TextStyle(
             color: AppTheme.primary,
             fontWeight: FontWeight.w400,
@@ -37,7 +31,7 @@ class _BottomNavigationWidgetState extends State<BottomNavigationWidget> {
   ]);
 
   @override
-  void initState() {
+  void initState() {  
     super.initState();
     selectedPos = 0;
     _navigationController = CircularBottomNavigationController(selectedPos);
@@ -75,9 +69,7 @@ class _BottomNavigationWidgetState extends State<BottomNavigationWidget> {
       case 0:
         return HomeScreen();
       case 1:
-        return NewScreen();
-      case 2:
-        return NotificationsScreen();
+        return AllProducts();
       default:
         return HomeScreen();
     }

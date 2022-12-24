@@ -1,19 +1,3 @@
-class ProductCategory {
-  int id;
-  String name; // Category name (Men,Women,Kids, Unisex)
-  String type; // A set from which it belongs (Handbag, Trauser, dress etc)
-  ProductCategory({required this.id, required this.name, required this.type});
-
-  static List<ProductCategory> productCategories = [
-    ProductCategory(id: 1, name: "Women", type: "Hand bag"),
-    ProductCategory(id: 2, name: "Men", type: "Boots"),
-    ProductCategory(id: 3, name: "Men", type: "Shirts"),
-    ProductCategory(id: 4, name: "Unisex", type: "Shirts"),
-    ProductCategory(id: 5, name: "Men", type: "Trauser"),
-    ProductCategory(id: 6, name: "Kids", type: "Shoes"),
-  ];
-}
-
 class Product {
   int id;
   String name;
@@ -22,7 +6,7 @@ class Product {
   int quantity;
   int minQuantity;
   String image;
-  int categoryId;
+  String type;
 
   Product(
       {required this.id,
@@ -32,7 +16,33 @@ class Product {
       required this.quantity,
       required this.minQuantity,
       required this.image,
-      required this.categoryId});
+      required this.type});
+
+  // factory from json
+  factory Product.fromJson(Map<String, dynamic> json) {
+    return Product(
+        id: json["id"],
+        name: json["name"],
+        price: json["price"],
+        quantity: json["quantity"],
+        minQuantity: json["minQuantity"],
+        image: json["image"],
+        type: json["type"]);
+  }
+
+  // static toMap
+  static Map<String, dynamic> toMap(Product product) {
+    Map<String, dynamic> data = {
+      "id": product.id,
+      "name": product.name,
+      "price": product.price,
+      "quantity": product.quantity,
+      "minQuantity": product.minQuantity,
+      "image": product.image,
+      "type": product.type
+    };
+    return data;
+  }
 
   static List<Product> products = [
     Product(
@@ -42,7 +52,7 @@ class Product {
       quantity: 30,
       minQuantity: 5,
       image: "assets/images/trauser.png",
-      categoryId: 5,
+      type: "Trousers",
     ),
     Product(
       id: 1,
@@ -51,7 +61,7 @@ class Product {
       quantity: 30,
       minQuantity: 5,
       image: "assets/images/boot.png",
-      categoryId: 2,
+      type: "Shoes",
     ),
     Product(
       id: 1,
@@ -60,7 +70,7 @@ class Product {
       quantity: 30,
       minQuantity: 5,
       image: "assets/images/handbag.png",
-      categoryId: 1,
+      type: "Bags",
     ),
     Product(
       id: 1,
@@ -69,7 +79,7 @@ class Product {
       quantity: 30,
       minQuantity: 5,
       image: "assets/images/long_sleeve_tee.png",
-      categoryId: 4,
+      type: "Shirts",
     ),
     Product(
       id: 1,
@@ -78,7 +88,7 @@ class Product {
       quantity: 30,
       minQuantity: 5,
       image: "assets/images/short_sleeve_tee.png",
-      categoryId: 4,
+      type: "Shirts",
     ),
     Product(
       id: 1,
@@ -87,7 +97,7 @@ class Product {
       quantity: 30,
       minQuantity: 5,
       image: "assets/images/user.png",
-      categoryId: 3,
+      type: "Trousers",
     ),
     Product(
       id: 1,
@@ -96,7 +106,7 @@ class Product {
       quantity: 30,
       minQuantity: 5,
       image: "assets/images/user.png",
-      categoryId: 3,
+      type: "Trousers",
     ),
     Product(
       id: 1,
@@ -105,7 +115,7 @@ class Product {
       quantity: 30,
       minQuantity: 5,
       image: "assets/images/user.png",
-      categoryId: 3,
+      type: "Trousers",
     ),
     Product(
       id: 1,
@@ -114,7 +124,7 @@ class Product {
       quantity: 30,
       minQuantity: 5,
       image: "assets/images/user.png",
-      categoryId: 3,
+      type: "Trousers",
     ),
     Product(
       id: 1,
@@ -123,15 +133,15 @@ class Product {
       quantity: 30,
       minQuantity: 5,
       image: "assets/images/user.png",
-      categoryId: 3,
+      type: "Trousers",
     ),
   ];
 
-// Find product category by id
-  getCategory() {
-    return ProductCategory.productCategories
-        .where((element) => element.id == categoryId)
-        .toList()[0]
-        .name;
-  }
+// // Find product category by id
+//   getCategory() {
+//     return ProductCategory.productCategories
+//         .where((element) => element.id == type)
+//         .toList()[0]
+//         .name;
+//   }
 }

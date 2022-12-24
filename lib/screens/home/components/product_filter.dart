@@ -8,8 +8,6 @@ List<Product> categoryFilter(String query) {
   if (query == "All") {
     return Product.products;
   } else {
-    return Product.products
-        .where((item) => item.getCategory().contains(query))
-        .toList();
+    return Product.products.where((item) => item.type.contains(query)).toList();
   }
 }

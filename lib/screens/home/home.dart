@@ -4,10 +4,62 @@ import 'package:dexter/screens/detail/detail.dart';
 import 'package:dexter/screens/home/components/body.dart';
 import 'package:dexter/screens/home/components/categories.dart';
 import 'package:dexter/screens/home/components/product_card.dart';
+import 'package:dexter/screens/home/components/product_filter.dart';
 import 'package:dexter/theme/theme.dart';
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  List<Product> products = categoryFilter("All");
+
+  static List<String> categories = [
+    "All",
+    "Boots",
+    "Bags",
+    "Socks",
+    "Dresses",
+    "Cardigans"
+  ];
+  static int selectedIndex = 0;
+
+  Widget buildCategory(int index) {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          selectedIndex = index;
+          products = categoryFilter(categories[selectedIndex]);
+        });
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              categories[index],
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: selectedIndex == index
+                    ? AppTheme.primary
+                    : AppTheme.secondary,
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 16.0 / 4),
+              height: 2,
+              width: 30,
+              color: selectedIndex == index ? Colors.black : Colors.transparent,
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -58,10 +110,22 @@ class HomeScreen extends StatelessWidget {
         ),
 
         // Category tabs
-        const Categories(),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16.0),
+          child: SizedBox(
+            height: 25,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: categories.length,
+              itemBuilder: (context, index) => buildCategory(index),
+            ),
+          ),
+        ),
 
         // Body of product cards
-        Body()
+        Body(
+          products: products,
+        )
       ]),
     );
   }
@@ -107,25 +171,26 @@ class CustomSearchDelegate extends SearchDelegate {
       padding: const EdgeInsets.all(16.0),
       child: Expanded(
         child: GridView.builder(
-            itemCount: matchQuery.length,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              mainAxisSpacing: 16.0,
-              crossAxisSpacing: 16.0,
-              childAspectRatio: 0.75,
-            ),
-            itemBuilder: (context, index) => ProductCard(
+          itemCount: matchQuery.length,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            mainAxisSpacing: 16.0,
+            crossAxisSpacing: 16.0,
+            childAspectRatio: 0.75,
+          ),
+          itemBuilder: (context, index) => ProductCard(
+            product: ProductProvider.instance.findByName(matchQuery[index])!,
+            onTapCallback: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => DetailScreen(
                   product:
                       ProductProvider.instance.findByName(matchQuery[index])!,
-                  onTapCallback: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => DetailScreen(
-                          product: ProductProvider.instance
-                              .findByName(matchQuery[index])!,
-                        ),
-                      )),
-                )),
+                ),
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -144,25 +209,26 @@ class CustomSearchDelegate extends SearchDelegate {
       padding: const EdgeInsets.all(16.0),
       child: Expanded(
         child: GridView.builder(
-            itemCount: matchQuery.length,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              mainAxisSpacing: 16.0,
-              crossAxisSpacing: 16.0,
-              childAspectRatio: 0.75,
-            ),
-            itemBuilder: (context, index) => ProductCard(
+          itemCount: matchQuery.length,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            mainAxisSpacing: 16.0,
+            crossAxisSpacing: 16.0,
+            childAspectRatio: 0.75,
+          ),
+          itemBuilder: (context, index) => ProductCard(
+            product: ProductProvider.instance.findByName(matchQuery[index])!,
+            onTapCallback: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => DetailScreen(
                   product:
                       ProductProvider.instance.findByName(matchQuery[index])!,
-                  onTapCallback: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => DetailScreen(
-                          product: ProductProvider.instance
-                              .findByName(matchQuery[index])!,
-                        ),
-                      )),
-                )),
+                ),
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
