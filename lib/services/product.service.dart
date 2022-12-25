@@ -8,8 +8,14 @@ class ProductService {
   // Save this data to provider
   static read() async {
     try {
-      var data =
-          firestore.collection("products").get().then((value) => value.docs);
+      // var data =
+      //     firestore.collection("products").get().then((value) => value.docs);
+
+      var data = firestore.collection("products").snapshots();
+
+      if (kDebugMode) {
+        print(data);
+      }
     } catch (e) {
       if (kDebugMode) {
         print(e);

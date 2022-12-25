@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "108895227520",
-    "project_id": "dexter-9c4c8",
-    "storage_bucket": "dexter-9c4c8.appspot.com"
+    "project_number": "191141917910",
+    "project_id": "dexter-f5c68",
+    "storage_bucket": "dexter-f5c68.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:108895227520:android:fd377f8a1d79d876342065",
+        "mobilesdk_app_id": "1:191141917910:android:07b2bef8fd54e7100e8577",
         "android_client_info": {
           "package_name": "com.example.dexter"
         }
       },
       "oauth_client": [
         {
-          "client_id": "108895227520-brelvdl1kuhb0rblf35ot4a7lsqmnhms.apps.googleusercontent.com",
+          "client_id": "191141917910-bhkgnpmcrgaoi0mjaodeg8in6pvh580e.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCWZc-GgM58goxW7eBRnesUXcT-mpoSwUI"
+          "current_key": "AIzaSyBcS_fiYm6suHlXvOVXJ0SNCriJBJoHqKk"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "108895227520-brelvdl1kuhb0rblf35ot4a7lsqmnhms.apps.googleusercontent.com",
+              "client_id": "191141917910-bhkgnpmcrgaoi0mjaodeg8in6pvh580e.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

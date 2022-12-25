@@ -18,7 +18,9 @@ class ProductProvider with ChangeNotifier {
   void initProducts() async {
     var response = await ProductService.read();
 
-    print(response);
+    if (kDebugMode) {
+      print(response);
+    }
   }
 
   void setProducts({required List<Product> products}) {
@@ -33,5 +35,6 @@ class ProductProvider with ChangeNotifier {
         return product;
       }
     }
+    return null;
   }
 }
