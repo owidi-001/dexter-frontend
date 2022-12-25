@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dexter/models/products_model.dart';
 import 'package:dexter/providers/product_provider.dart';
 import 'package:dexter/screens/home/components/product_filter.dart';
+import 'package:dexter/services/product.service.dart';
 import 'package:dexter/theme/theme.dart';
 import 'package:dexter/widgets/appButtonWidget.dart';
 import 'package:dexter/widgets/form_field_decorator.dart';
@@ -53,7 +55,7 @@ class _AllProductsState extends State<AllProducts> {
   XFile? image;
 
   // It will also be triggered when you want to update an item or create on
-  void _showForm(int? id) async {
+  void _showForm(String? id) async {
     // id == null -> create new item
     // id != null -> update an existing item
     if (id != null) {
@@ -231,7 +233,10 @@ class _AllProductsState extends State<AllProducts> {
                         height: 10,
                       ),
                       AppButtonWidget(
-                          title: "Delete", onPressedCallBack: () {}),
+                          title: "Delete",
+                          onPressedCallBack: () async {
+                            _deleteItem(id);
+                          }),
                     ],
                   ),
           ],
@@ -256,8 +261,14 @@ class _AllProductsState extends State<AllProducts> {
       }
 
       // Create function
-      // await SQLHelper.createItem(
-      //     _nameController.text, imageData, _descriptionController.text);
+      Map<String, dynamic> data = {
+        'name': _nameController.text,
+        'price': _priceController.text,
+        'quantity': _quantityController.text,
+        'minQuantity': _minQuantityController.text,
+        'image': imageData
+      };
+      ProductService.create(data);
 
       _refreshMenu();
 
@@ -272,10 +283,16 @@ class _AllProductsState extends State<AllProducts> {
   }
 
   // Update an existing journal
-  Future<void> _updateMenu(int id) async {
+  Future<void> _updateMenu(String id) async {
     // Update function
-    // await SQLHelper.updateItem(
-    //     id, _nameController.text, _descriptionController.text);
+    Map<String, dynamic> data = {
+      'name': _nameController.text,
+      'price': _priceController.text,
+      'quantity': _quantityController.text,
+      'minQuantity': _minQuantityController.text
+    };
+
+    ProductService.update(id, data);
 
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
       content: Text('Product Updated successfully!'),
@@ -284,9 +301,9 @@ class _AllProductsState extends State<AllProducts> {
   }
 
   // Delete an item
-  void _deleteItem(int id) async {
-    // Delete function
-    // await SQLHelper.deleteItem(id);
+  void _deleteItem(String id) async {
+    // Call service to delete item with the specified id
+    ProductService.delete(id);
 
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
       content: Text('Successfully deleted a menu!'),

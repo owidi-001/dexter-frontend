@@ -1,4 +1,5 @@
 import 'package:dexter/models/products_model.dart';
+import 'package:dexter/services/product.service.dart';
 import 'package:dexter/utils/status.dart';
 import 'package:flutter/foundation.dart';
 
@@ -12,6 +13,12 @@ class ProductProvider with ChangeNotifier {
   void loadingStatusChanged(LoadingStatus status) {
     this.status = status;
     notifyListeners();
+  }
+
+  void initProducts() async {
+    var response = await ProductService.read();
+
+    print(response);
   }
 
   void setProducts({required List<Product> products}) {

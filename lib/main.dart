@@ -1,12 +1,16 @@
 import 'package:dexter/providers/auth_provider.dart';
 import 'package:dexter/providers/product_provider.dart';
 import 'package:dexter/widgets/bottomNavigationWidget.dart';
-// import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
 
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (_) => AuthenticationProvider.instance),
