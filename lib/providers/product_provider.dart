@@ -1,5 +1,5 @@
 import 'package:dexter/models/products_model.dart';
-import 'package:dexter/services/product.service.dart';
+import 'package:dexter/services/app_service.dart';
 import 'package:dexter/utils/status.dart';
 import 'package:flutter/foundation.dart';
 
@@ -16,7 +16,7 @@ class ProductProvider with ChangeNotifier {
   }
 
   void initProducts() async {
-    var response = await ProductService.read();
+    var response = await AppService.productFetch();
 
     if (kDebugMode) {
       print(response);

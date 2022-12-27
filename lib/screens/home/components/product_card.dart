@@ -33,17 +33,28 @@ class ProductCard extends StatelessWidget {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16.0 / 4),
-            child: Text(
-              product.name,
-              style: const TextStyle(color: AppTheme.secondary),
-            ),
+          const SizedBox(
+            height: 8.0,
           ),
-          Text(
-            "\$${product.price}",
-            style: const TextStyle(fontWeight: FontWeight.bold),
-          )
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                width: 80,
+                padding: const EdgeInsets.symmetric(vertical: 16.0 / 4),
+                child: Text(
+                  product.name,
+                  style: const TextStyle(color: AppTheme.secondary),
+                ),
+              ),
+              Text(
+                "Sh. ${product.price}",
+                style: const TextStyle(
+                    fontWeight: FontWeight.bold, color: AppTheme.primary),
+              )
+            ],
+          ),
         ],
       ),
     );

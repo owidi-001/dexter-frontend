@@ -1,8 +1,11 @@
 import 'package:circular_bottom_navigation/circular_bottom_navigation.dart';
 import 'package:circular_bottom_navigation/tab_item.dart';
+import 'package:dexter/screens/cart/cart.dart';
 import 'package:dexter/screens/home/home.dart';
-import 'package:dexter/screens/manage/all_products.dart';
+import 'package:dexter/screens/profile/pages/all_products.dart';
+import 'package:dexter/screens/profile/profile.dart';
 import 'package:dexter/theme/theme.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class BottomNavigationWidget extends StatefulWidget {
@@ -18,12 +21,17 @@ class _BottomNavigationWidgetState extends State<BottomNavigationWidget> {
   late CircularBottomNavigationController _navigationController;
 
   List<TabItem> tabItems = List.of([
-    TabItem(Icons.dashboard_rounded, "Dashboard", AppTheme.primary,
+    TabItem(CupertinoIcons.house_alt_fill, "Shop", AppTheme.primary,
         labelStyle: const TextStyle(
             color: AppTheme.primary,
             fontWeight: FontWeight.w400,
             fontSize: 12)),
-    TabItem(Icons.dashboard_customize_rounded, "Manage", AppTheme.primary,
+    TabItem(CupertinoIcons.bag_fill, "Cart", AppTheme.primary,
+        labelStyle: const TextStyle(
+            color: AppTheme.primary,
+            fontWeight: FontWeight.w400,
+            fontSize: 12)),
+    TabItem(Icons.settings_applications, "BS Profile", AppTheme.primary,
         labelStyle: const TextStyle(
             color: AppTheme.primary,
             fontWeight: FontWeight.w400,
@@ -31,7 +39,7 @@ class _BottomNavigationWidgetState extends State<BottomNavigationWidget> {
   ]);
 
   @override
-  void initState() {  
+  void initState() {
     super.initState();
     selectedPos = 0;
     _navigationController = CircularBottomNavigationController(selectedPos);
@@ -69,7 +77,9 @@ class _BottomNavigationWidgetState extends State<BottomNavigationWidget> {
       case 0:
         return HomeScreen();
       case 1:
-        return AllProducts();
+        return CartScreen();
+      case 2:
+        return Profile();
       default:
         return HomeScreen();
     }

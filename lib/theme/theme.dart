@@ -10,9 +10,7 @@ class AppTheme {
 
   static const Color secondary = Colors.black54;
 
-  static const Color danger = Colors.black54;
-
-
+  static const Color danger = Colors.red;
 
   static const Map<Enum, Color> typeColor = {
     MessageTypes.success: Colors.green,

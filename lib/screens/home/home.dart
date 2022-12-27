@@ -2,10 +2,10 @@ import 'package:dexter/models/products_model.dart';
 import 'package:dexter/providers/product_provider.dart';
 import 'package:dexter/screens/detail/detail.dart';
 import 'package:dexter/screens/home/components/body.dart';
-import 'package:dexter/screens/home/components/categories.dart';
 import 'package:dexter/screens/home/components/product_card.dart';
 import 'package:dexter/screens/home/components/product_filter.dart';
 import 'package:dexter/theme/theme.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -18,10 +18,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   static List<String> categories = [
     "All",
-    "Boots",
+    "Shoes",
     "Bags",
-    "Socks",
-    "Dresses",
+    "Shirts",
+    "Trousers",
     "Cardigans"
   ];
   static int selectedIndex = 0;
@@ -62,71 +62,66 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        const SizedBox(
-          height: 32,
-        ),
-
-        // Top widgets
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            const Text(
-              "Dexter",
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                  fontSize: 18,
-                  fontFamily: 'Playfair',
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black),
+    return Scaffold(
+      appBar: AppBar(
+          elevation: 0,
+          backgroundColor: AppTheme.primary,
+          title: const Text(
+            "Dexter",
+            textAlign: TextAlign.left,
+            style: TextStyle(
+              fontSize: 18,
+              fontFamily: 'Playfair',
+              fontWeight: FontWeight.w600,
             ),
-            Container(
-              margin: const EdgeInsets.only(top: 8.0),
-              height: 48,
-              width: 48,
-              padding: const EdgeInsets.all(4.0),
-              decoration: BoxDecoration(
-                  color: AppTheme.white,
-                  borderRadius: BorderRadius.circular(8.0)),
-              child: // Search Button
-                  IconButton(
-                onPressed: (() {
+          ),
+          actions: [
+            InkWell(
+                onTap: (() {
                   showSearch(
                     context: context,
                     delegate: CustomSearchDelegate(),
                   );
                 }),
-                icon: const Icon(
-                  Icons.search,
-                  color: AppTheme.primary,
-                ),
+                child: const CircleAvatar(
+                    backgroundColor: AppTheme.gradient,
+                    child: Icon(
+                      CupertinoIcons.search_circle_fill,
+                      color: AppTheme.primary,
+                    ))),
+            const SizedBox(
+              width: 18,
+            )
+          ]),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          const SizedBox(
+            height: 16,
+          ),
+
+          // Category tabs
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16.0),
+            child: SizedBox(
+              height: 25,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: categories.length,
+                itemBuilder: (context, index) => buildCategory(index),
               ),
             ),
-          ],
-        ),
-
-        // Category tabs
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16.0),
-          child: SizedBox(
-            height: 25,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: categories.length,
-              itemBuilder: (context, index) => buildCategory(index),
-            ),
           ),
-        ),
 
-        // Body of product cards
-        Body(
-          products: products,
-        )
-      ]),
+          // Body of product cards
+          Body(
+            products: products,
+          ),
+          const SizedBox(
+            height: 48,
+          ),
+        ]),
+      ),
     );
   }
 }
@@ -144,7 +139,10 @@ class CustomSearchDelegate extends SearchDelegate {
           onPressed: (() {
             query = "";
           }),
-          icon: const Icon(Icons.clear))
+          icon: const Icon(Icons.clear)),
+      const SizedBox(
+        width: 16.0,
+      ),
     ];
   }
 

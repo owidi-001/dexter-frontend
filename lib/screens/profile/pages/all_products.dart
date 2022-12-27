@@ -1,11 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dexter/models/products_model.dart';
 import 'package:dexter/providers/product_provider.dart';
 import 'package:dexter/screens/home/components/product_filter.dart';
-import 'package:dexter/services/product.service.dart';
+import 'package:dexter/services/app_service.dart';
 import 'package:dexter/theme/theme.dart';
 import 'package:dexter/widgets/appButtonWidget.dart';
 import 'package:dexter/widgets/form_field_decorator.dart';
@@ -268,7 +267,7 @@ class _AllProductsState extends State<AllProducts> {
         'minQuantity': _minQuantityController.text,
         'image': imageData
       };
-      ProductService.create(data);
+      AppService.productCreate(data);
 
       _refreshMenu();
 
@@ -292,7 +291,7 @@ class _AllProductsState extends State<AllProducts> {
       'minQuantity': _minQuantityController.text
     };
 
-    ProductService.update(id, data);
+    AppService.productUpdate(id, data);
 
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
       content: Text('Product Updated successfully!'),
@@ -303,7 +302,7 @@ class _AllProductsState extends State<AllProducts> {
   // Delete an item
   void _deleteItem(String id) async {
     // Call service to delete item with the specified id
-    ProductService.delete(id);
+    AppService.productDelete(id);
 
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
       content: Text('Successfully deleted a menu!'),
@@ -318,25 +317,55 @@ class _AllProductsState extends State<AllProducts> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppTheme.primary,
-        title: const Text("Products"),
-        centerTitle: true,
-        actions: [
-          InkWell(
-              onTap: (() {
-                _showForm(null);
-              }),
-              child: const CircleAvatar(
-                  backgroundColor: AppTheme.gradient,
-                  child: Icon(
-                    CupertinoIcons.add_circled_solid,
-                    color: AppTheme.primary,
-                  ))),
-          const SizedBox(
-            width: 18,
-          )
-        ],
-      ),
+          elevation: 0,
+          centerTitle: true,
+          backgroundColor: AppTheme.primary,
+          title: const Text(
+            "All Products",
+            textAlign: TextAlign.left,
+            style: TextStyle(
+              fontSize: 18,
+              fontFamily: 'Playfair',
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          actions: [
+            InkWell(
+                onTap: (() {
+                  _showForm(null);
+                }),
+                child: const CircleAvatar(
+                    backgroundColor: AppTheme.gradient,
+                    child: Icon(
+                      CupertinoIcons.add_circled_solid,
+                      color: AppTheme.primary,
+                    ))),
+            const SizedBox(
+              width: 18,
+            )
+          ]),
+
+      // appBar: AppBar(
+      //   backgroundColor: AppTheme.primary,
+      //   title: const Text("Products"),
+      //   centerTitle: true,
+      //   actions: [
+      //     InkWell(
+      //         onTap: (() {
+      //           _showForm(null);
+      //         }),
+      //         child: const CircleAvatar(
+      //             backgroundColor: AppTheme.gradient,
+      //             child: Icon(
+      //               CupertinoIcons.add_circled_solid,
+      //               color: AppTheme.primary,
+      //             ))),
+      //     const SizedBox(
+      //       width: 18,
+      //     )
+      //   ],
+      // ),
+
       body: SingleChildScrollView(
         child: _products.isNotEmpty
             ? MasonryView(
