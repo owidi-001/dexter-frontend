@@ -1,8 +1,10 @@
 import 'package:dexter/models/notification_model.dart';
+import 'package:dexter/providers/notifications_provider.dart';
 import 'package:dexter/services/app_service.dart';
 import 'package:dexter/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dialogs/flutter_dialogs.dart';
+import 'package:provider/provider.dart';
 
 class NotificationTile extends StatelessWidget {
   AppNotification notification;
@@ -10,6 +12,7 @@ class NotificationTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var notificationProvider = Provider.of<NotificationsProvider>(context);
     return Container(
       // padding: const EdgeInsets.symmetric(horizontal: 16.0),
       margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
@@ -35,7 +38,9 @@ class NotificationTile extends StatelessWidget {
                   ),
                   onPressed: () async {
                     // Make notification read
-                    await AppService().readNotification(notification.id);
+                    await AppService()
+                        .readNotification(data: {"id": notification.id});
+                    notificationProvider.refresh();
                     Navigator.pop(context);
                   },
                 ),
@@ -70,12 +75,15 @@ class NotificationTile extends StatelessWidget {
         ),
         subtitle: Text(
           notification.body,
+          maxLines: 2,
+          overflow: TextOverflow.fade,
           style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
         ),
         trailing: InkWell(
           onTap: () {
             // App service call delete notification
-            AppService().deleteNotification(notification.id);
+            AppService().deleteNotification(data: {"id": notification.id});
+            notificationProvider.refresh();
           },
           child: const Icon(
             Icons.remove_circle,

@@ -31,13 +31,15 @@ class Notifications extends StatelessWidget {
                 onTap: (() {
                   // make all notifications read/openned
                   for (var notification in notificationsProvider.items) {
-                    AppService().readNotification(notification.id);
+                    AppService()
+                        .readNotification(data: {"id": notification.id});
                   }
+                  notificationsProvider.refresh();
                 }),
                 child: const CircleAvatar(
                     backgroundColor: AppTheme.gradient,
                     child: Icon(
-                      CupertinoIcons.chart_bar_circle,
+                      CupertinoIcons.envelope_open_fill,
                       color: AppTheme.primary,
                     ))),
             const SizedBox(
@@ -53,7 +55,7 @@ class Notifications extends StatelessWidget {
         child: notificationsProvider.items.isNotEmpty
             ? ListView.builder(
                 scrollDirection: Axis.vertical,
-                itemCount: 20,
+                itemCount: notificationsProvider.items.length,
                 itemBuilder: ((context, index) => NotificationTile(
                       notification: notificationsProvider.items[index],
                     )),

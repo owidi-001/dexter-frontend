@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dexter/models/products_model.dart';
 import 'package:dexter/theme/theme.dart';
 import 'package:flutter/material.dart';
@@ -27,9 +29,21 @@ class ProductCard extends StatelessWidget {
                 color: AppTheme.primary,
                 borderRadius: BorderRadius.circular(16),
               ),
+              // child: Hero(
+              //   tag: "${product.id}",
+              //   child: Image.asset(product.image),
+              // ),
               child: Hero(
                 tag: "${product.id}",
-                child: Image.asset(product.image),
+                child: product.image.toString().isNotEmpty
+                    ? Image.memory(
+                        const Base64Decoder().convert(product.image),
+                      )
+                    : Container(
+                        decoration: BoxDecoration(
+                            color: AppTheme.primary,
+                            borderRadius: BorderRadius.circular(12)),
+                      ),
               ),
             ),
           ),

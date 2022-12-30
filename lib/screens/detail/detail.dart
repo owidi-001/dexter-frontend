@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dexter/models/cart_model.dart';
 import 'package:dexter/models/products_model.dart';
 import 'package:dexter/providers/cart_provider.dart';
@@ -20,6 +22,7 @@ class _DetailScreenState extends State<DetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    
     Size size = MediaQuery.of(context).size;
     var cartProvider = Provider.of<CartProvider>(context);
 
@@ -227,10 +230,20 @@ class _DetailScreenState extends State<DetailScreen> {
                               Expanded(
                                 child: Hero(
                                   tag: "${widget.product.id}",
-                                  child: Image.asset(
-                                    widget.product.image,
-                                    fit: BoxFit.fill,
-                                  ),
+                                  child: widget.product.image
+                                          .toString()
+                                          .isNotEmpty
+                                      ? Image.memory(
+                                          const Base64Decoder()
+                                              .convert(widget.product.image),
+                                          fit: BoxFit.fill,
+                                        )
+                                      : Container(
+                                          decoration: BoxDecoration(
+                                              color: AppTheme.primary,
+                                              borderRadius:
+                                                  BorderRadius.circular(12)),
+                                        ),
                                 ),
                               )
                             ],

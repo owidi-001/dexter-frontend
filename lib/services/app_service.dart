@@ -1,31 +1,64 @@
+import 'package:dexter/models/exception.dart';
+import 'package:dexter/models/notification_model.dart';
+import 'package:dexter/models/products_model.dart';
+import 'package:dexter/services/api_client_service.dart';
+import 'package:dexter/utils/constants.dart';
+
 class AppService {
   // fetch notifications
-  Future fetchNotifications() async {}
+  Future<HttpResult<List<AppNotification>>> fetchNotifications() =>
+      HttpClient.get2<List<AppNotification>>(APIRoutes.notifications,
+          der: (data) => data
+              .map<AppNotification>((json) => AppNotification.fromJson(json))
+              .toList());
 
   // read notification
-  Future readNotification(int id) async {}
+  Future<HttpResult<AppNotification>> readNotification(
+          {required Map<String, dynamic> data}) =>
+      HttpClient.patch2<AppNotification>(
+        APIRoutes.notifications,
+        data: data,
+        der: (data) => AppNotification.fromJson(data),
+      );
 
   // delete notification
-  Future deleteNotification(int id) async {}
+  Future<HttpResult<AppNotification>> deleteNotification(
+          {required Map<String, dynamic> data}) =>
+      HttpClient.delete2<AppNotification>(
+        APIRoutes.notifications,
+        data: data,
+        der: (data) => AppNotification.fromJson(data),
+      );
 
   // Product services
-  // Product create
-  static productFetch() async {
-    try {} catch (e) {}
-  }
+  Future<HttpResult<List<Product>>> fetchProducts() =>
+      HttpClient.get2<List<Product>>(APIRoutes.products,
+          der: (data) =>
+              data.map<Product>((json) => Product.fromJson(json)).toList());
 
   // Create new product
-  static void productCreate(Map<String, dynamic> data) async {
-    try {} catch (e) {}
-  }
+  Future<HttpResult<Product>> productCreate(
+          {required Map<String, dynamic> data}) =>
+      HttpClient.post2<Product>(
+        APIRoutes.products,
+        data: data,
+        der: (data) => Product.fromJson(data),
+      );
 
   // Update existing product
-  static void productUpdate(String id, Map<String, dynamic> data) async {
-    try {} catch (e) {}
-  }
+  Future<HttpResult<Product>> productUpdate(
+          {required int id, required Map<String, dynamic> data}) =>
+      HttpClient.patch2<Product>(
+        APIRoutes.products,
+        data: data,
+        der: (data) => Product.fromJson(data),
+      );
 
   // Delete product
-  static void productDelete(String id) async {
-    try {} catch (e) {}
-  }
+  Future<HttpResult<Product>> productDelete({required int data}) =>
+      HttpClient.delete2<Product>(
+        APIRoutes.products,
+        data: data,
+        der: (data) => Product.fromJson(data),
+      );
 }

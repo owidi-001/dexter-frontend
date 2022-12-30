@@ -1,31 +1,61 @@
+import 'dart:collection';
+
 import 'package:dexter/models/products_model.dart';
 import 'package:dexter/services/app_service.dart';
 import 'package:dexter/utils/status.dart';
 import 'package:flutter/foundation.dart';
 
-class ProductProvider with ChangeNotifier {
-  ProductProvider._();
-  static final instance = ProductProvider._();
-
-  List<Product> products = Product.products;
+class ProductProvider extends ChangeNotifier {
+  List<Product> _products = [];
   LoadingStatus status = LoadingStatus.unknown;
 
-  void loadingStatusChanged(LoadingStatus status) {
-    this.status = status;
+  List<Product> get products => _products;
+
+  // Constructor
+  ProductProvider() {
+    status = LoadingStatus.unknown;
+    _initFetch();
+  }
+
+  setProducts(List<Product> notifications) {
+    _products = notifications;
     notifyListeners();
   }
 
-  void initProducts() async {
-    var response = await AppService.productFetch();
+  // fetch products
+  Future<void> _initFetch() async {
+    final res = await AppService().fetchProducts();
 
     if (kDebugMode) {
-      print(response);
+      print(res);
     }
+
+    res.when(error: (error) {
+      status = LoadingStatus.loadingFailure;
+    }, success: (data) {
+      if (kDebugMode) {
+        print(data);
+      }
+      setProducts(data);
+      status = LoadingStatus.loadingSuccess;
+    });
+
+    notifyListeners();
   }
 
-  void setProducts({required List<Product> products}) {
-    this.products = products;
-    status = LoadingStatus.loadingSuccess;
+  // Build categories
+  List<String> buildCategories() {
+    List<String> categories = _products.map((e) => e.type).toList();
+
+    if (kDebugMode) {
+      print(categories);
+    }
+    return categories;
+  }
+
+  // Get new notifications
+  void refresh() async {
+    await _initFetch();
     notifyListeners();
   }
 

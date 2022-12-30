@@ -32,6 +32,17 @@ class UserPreferences {
     });
   }
 
+  // get auth token from saved user
+  Future<String> getToken() async {
+    String token = "";
+    var userLoaded = await loadUserData();
+
+    if (userLoaded != null) {
+      token = userLoaded.user.token;
+    }
+    return token;
+  }
+
   void logout() async {
     await prefs.then((value) => value.remove(USER));
   }

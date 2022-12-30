@@ -28,14 +28,16 @@ class HelpPage extends StatelessWidget {
       )
       ..loadRequest(Uri.parse('https://owidi-001.github.io/owidi-portfolio/'));
 
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppTheme.primary,
-        title: const Text('Help page'),
-      ),
-      body: SizedBox(
-        width: double.infinity,
-        child: WebViewWidget(controller: controller),
+    return SafeArea(
+      child: Scaffold(
+        // appBar: AppBar(
+        //   backgroundColor: AppTheme.primary,
+        //   title: const Text('Help page'),
+        // ),
+        body: SizedBox(
+          width: double.infinity,
+          child: WebViewWidget(controller: controller),
+        ),
       ),
     );
   }

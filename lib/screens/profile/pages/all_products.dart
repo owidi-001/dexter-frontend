@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:dexter/models/products_model.dart';
 import 'package:dexter/providers/product_provider.dart';
-import 'package:dexter/screens/home/components/product_filter.dart';
 import 'package:dexter/services/app_service.dart';
 import 'package:dexter/theme/theme.dart';
 import 'package:dexter/widgets/appButtonWidget.dart';
@@ -23,26 +22,7 @@ class AllProducts extends StatefulWidget {
 }
 
 class _AllProductsState extends State<AllProducts> {
-  // All products
-  List<Product> _products = categoryFilter("all");
-
-  bool _isLoading = true;
-
-  // This function is used to fetch all data from the database
-  void _refreshMenu() async {
-    List<Product> data = categoryFilter("all");
-
-    setState(() {
-      _products = data;
-      _isLoading = false;
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _refreshMenu(); // loads products when app starts
-  }
+  List<Product> _products = [];
 
   // Form fields
   final TextEditingController _nameController = TextEditingController();
@@ -54,7 +34,7 @@ class _AllProductsState extends State<AllProducts> {
   XFile? image;
 
   // It will also be triggered when you want to update an item or create on
-  void _showForm(String? id) async {
+  void _showForm(int? id) async {
     // id == null -> create new item
     // id != null -> update an existing item
     if (id != null) {
@@ -84,161 +64,164 @@ class _AllProductsState extends State<AllProducts> {
           left: 15,
           right: 15,
           // this will prevent the soft keyboard from covering the text fields
-          bottom: MediaQuery.of(context).viewInsets.bottom + 120,
+          bottom: MediaQuery.of(context).viewInsets.bottom + 16,
         ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            TextField(
-              controller: _nameController,
-              decoration: buildInputDecoration("Name", Icons.edit),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            TextField(
-              controller: _nameController,
-              decoration: buildInputDecoration("Price", Icons.money),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            TextField(
-              controller: _nameController,
-              decoration: buildInputDecoration("Quantity", Icons.numbers),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            TextField(
-              controller: _nameController,
-              decoration:
-                  buildInputDecoration("minQuantity", Icons.numbers_rounded),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Container(
-              decoration: const BoxDecoration(
-                  color: AppTheme.white,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(10),
-                      topRight: Radius.circular(10))),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: const [
-                      Padding(
-                        padding: EdgeInsets.only(left: 16.0),
-                        child: Text(
-                          "Image from",
-                          style: TextStyle(
-                              color: AppTheme.primary,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      TextButton.icon(
-                        onPressed: () async {
-                          // Pick an image
-                          image = await _picker.pickImage(
-                              source: ImageSource.camera,
-                              // Compress image upload
-                              maxHeight: 1024,
-                              maxWidth: 1024,
-                              imageQuality: 50);
-                          setState(() {});
-                        },
-                        icon: const Icon(
-                          Icons.photo,
-                          color: AppTheme.primary,
-                        ),
-                        label: const Text(
-                          "Camera",
-                          style: TextStyle(color: AppTheme.primary),
-                        ),
-                      ),
-                      TextButton.icon(
-                        onPressed: () async {
-                          image = await _picker.pickImage(
-                              source: ImageSource.gallery);
-                          setState(() {});
-                        },
-                        icon: const Icon(
-                          Icons.photo,
-                          color: AppTheme.primary,
-                        ),
-                        label: const Text(
-                          "Gallery",
-                          style: TextStyle(color: AppTheme.primary),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              TextField(
+                controller: _nameController,
+                decoration: buildInputDecoration("Name", Icons.edit),
               ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Material(
-              elevation: 5,
-              borderRadius: const BorderRadius.all(Radius.circular(10)),
-              color: AppTheme.primary,
-              child: MaterialButton(
-                onPressed: () async {
-                  // Save new journal
-                  if (id == null) {
-                    await _addProduct();
-                  } else {
-                    await _updateMenu(id);
-                  }
-
-                  // Close the bottom sheet
-                  Navigator.of(context).pop();
-                },
-                padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-                minWidth: double.infinity,
-                child: Text(
-                  id == null ? 'Create New' : 'Update',
-                  style: const TextStyle(
-                      color: AppTheme.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18),
+              const SizedBox(
+                height: 10,
+              ),
+              TextField(
+                controller: _priceController,
+                decoration: buildInputDecoration("Price", Icons.money),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              TextField(
+                controller: _quantityController,
+                decoration: buildInputDecoration("Quantity", Icons.numbers),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              TextField(
+                controller: _minQuantityController,
+                decoration: buildInputDecoration("minQuantity", Icons.numbers),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Container(
+                decoration: const BoxDecoration(
+                    color: AppTheme.white,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10),
+                        topRight: Radius.circular(10))),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: const [
+                        Padding(
+                          padding: EdgeInsets.only(left: 16.0),
+                          child: Text(
+                            "Image from",
+                            style: TextStyle(
+                                color: AppTheme.primary,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        TextButton.icon(
+                          onPressed: () async {
+                            // Pick an image
+                            image = await _picker.pickImage(
+                                source: ImageSource.camera,
+                                // Compress image upload
+                                maxHeight: 1024,
+                                maxWidth: 1024,
+                                imageQuality: 50);
+                            setState(() {});
+                          },
+                          icon: const Icon(
+                            Icons.photo,
+                            color: AppTheme.primary,
+                          ),
+                          label: const Text(
+                            "Camera",
+                            style: TextStyle(color: AppTheme.primary),
+                          ),
+                        ),
+                        TextButton.icon(
+                          onPressed: () async {
+                            image = await _picker.pickImage(
+                                source: ImageSource.gallery);
+                            setState(() {});
+                          },
+                          icon: const Icon(
+                            Icons.photo,
+                            color: AppTheme.primary,
+                          ),
+                          label: const Text(
+                            "Gallery",
+                            style: TextStyle(color: AppTheme.primary),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
-            ),
-            id == null
-                ? Container()
-                : Column(
-                    children: [
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      AppButtonWidget(
+              const SizedBox(
+                height: 20,
+              ),
+              Material(
+                elevation: 5,
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
+                color: AppTheme.primary,
+                child: MaterialButton(
+                  onPressed: () async {
+                    // Save new journal
+                    if (id == null) {
+                      await _addProduct();
+                    } else {
+                      await _updateMenu(id);
+                    }
+
+                    // Close the bottom sheet
+                    Navigator.of(context).pop();
+                  },
+                  padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+                  minWidth: double.infinity,
+                  child: Text(
+                    id == null ? 'Create New' : 'Update',
+                    style: const TextStyle(
+                        color: AppTheme.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18),
+                  ),
+                ),
+              ),
+              id == null
+                  ? Container()
+                  : Column(
+                      children: [
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        AppButtonWidget(
                           title: "Delete",
                           onPressedCallBack: () async {
                             _deleteItem(id);
-                          }),
-                    ],
-                  ),
-          ],
+                          },
+                          background: AppTheme.danger,
+                        ),
+                      ],
+                    ),
+            ],
+          ),
         ),
       ),
     );
@@ -267,9 +250,7 @@ class _AllProductsState extends State<AllProducts> {
         'minQuantity': _minQuantityController.text,
         'image': imageData
       };
-      AppService.productCreate(data);
-
-      _refreshMenu();
+      AppService().productCreate(data: data);
 
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('Product added successfully!'),
@@ -282,7 +263,7 @@ class _AllProductsState extends State<AllProducts> {
   }
 
   // Update an existing journal
-  Future<void> _updateMenu(String id) async {
+  Future<void> _updateMenu(int id) async {
     // Update function
     Map<String, dynamic> data = {
       'name': _nameController.text,
@@ -291,29 +272,29 @@ class _AllProductsState extends State<AllProducts> {
       'minQuantity': _minQuantityController.text
     };
 
-    AppService.productUpdate(id, data);
+    AppService().productUpdate(id: id, data: data);
 
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
       content: Text('Product Updated successfully!'),
     ));
-    _refreshMenu();
+    Provider.of<ProductProvider>(context).refresh();
   }
 
   // Delete an item
-  void _deleteItem(String id) async {
+  void _deleteItem(int id) async {
     // Call service to delete item with the specified id
-    AppService.productDelete(id);
+    AppService().productDelete(data: id);
 
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
       content: Text('Successfully deleted a menu!'),
     ));
-    _refreshMenu();
+    Provider.of<ProductProvider>(context).refresh();
   }
 
   @override
   Widget build(BuildContext context) {
-    var productProvider = Provider.of<ProductProvider>(context);
-    _products = productProvider.products;
+    // All products
+    _products = Provider.of<ProductProvider>(context).products;
 
     return Scaffold(
       appBar: AppBar(
@@ -344,37 +325,12 @@ class _AllProductsState extends State<AllProducts> {
               width: 18,
             )
           ]),
-
-      // appBar: AppBar(
-      //   backgroundColor: AppTheme.primary,
-      //   title: const Text("Products"),
-      //   centerTitle: true,
-      //   actions: [
-      //     InkWell(
-      //         onTap: (() {
-      //           _showForm(null);
-      //         }),
-      //         child: const CircleAvatar(
-      //             backgroundColor: AppTheme.gradient,
-      //             child: Icon(
-      //               CupertinoIcons.add_circled_solid,
-      //               color: AppTheme.primary,
-      //             ))),
-      //     const SizedBox(
-      //       width: 18,
-      //     )
-      //   ],
-      // ),
-
       body: SingleChildScrollView(
         child: _products.isNotEmpty
             ? MasonryView(
                 listOfItem: _products,
                 numberOfColumn: 2,
                 itemBuilder: (item) {
-                  // Create food instance from the item indexed
-                  // Product product = Product.fromJson(item);
-
                   return Container(
                     decoration: const BoxDecoration(
                       color: AppTheme.gradient,
@@ -384,36 +340,30 @@ class _AllProductsState extends State<AllProducts> {
                     ),
                     child: InkWell(
                       onTap: () {
+                        print("Item clicked");
                         _showForm(item.id);
                       },
                       child: Column(
                         children: [
                           ClipRRect(
                             borderRadius: BorderRadius.circular(10.0),
-                            // child: item.image.toString().isNotEmpty
-                            //     ? Image.memory(
-                            //         const Base64Decoder().convert(item.image),
-                            //       )
-                            //     : Container(
-                            //         decoration: BoxDecoration(
-                            //             color: AppTheme.primary,
-                            //             borderRadius:
-                            //                 BorderRadius.circular(12)),
-                            //       ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Image.asset(item.image),
-                            ),
+                            child: item.image.toString().isNotEmpty
+                                ? Image.memory(
+                                    const Base64Decoder().convert(item.image),
+                                  )
+                                : Container(
+                                    decoration: BoxDecoration(
+                                        color: AppTheme.primary,
+                                        borderRadius:
+                                            BorderRadius.circular(12)),
+                                  ),
                           ),
                           Padding(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 16.0, vertical: 10.0),
                             child: Text(
                               item.name,
-                              style: const TextStyle(
-                                  color: AppTheme.primary,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold),
+                              style: const TextStyle(color: AppTheme.secondary),
                             ),
                           ),
                         ],

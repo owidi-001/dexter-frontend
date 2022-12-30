@@ -4,7 +4,6 @@ import 'package:dexter/models/notification_model.dart';
 import 'package:dexter/services/app_service.dart';
 import 'package:dexter/utils/status.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 
 class NotificationsProvider extends ChangeNotifier {
   List<AppNotification> _items = [];
@@ -28,6 +27,10 @@ class NotificationsProvider extends ChangeNotifier {
   Future<void> _initFetch() async {
     final res = await AppService().fetchNotifications();
 
+    if (kDebugMode) {
+      print(res);
+    }
+
     res.when(error: (error) {
       status = LoadingStatus.loadingFailure;
     }, success: (data) {
@@ -44,5 +47,6 @@ class NotificationsProvider extends ChangeNotifier {
   // Get new notifications
   void refresh() async {
     await _initFetch();
+    notifyListeners();
   }
 }

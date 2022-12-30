@@ -1,4 +1,3 @@
-
 class AppNotification {
   int id;
   String title;

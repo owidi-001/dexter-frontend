@@ -2,11 +2,14 @@ import 'package:dexter/models/products_model.dart';
 import 'package:dexter/providers/product_provider.dart';
 import 'package:dexter/screens/detail/detail.dart';
 import 'package:dexter/screens/home/components/body.dart';
+import 'package:dexter/screens/home/components/category_filter.dart';
 import 'package:dexter/screens/home/components/product_card.dart';
-import 'package:dexter/screens/home/components/product_filter.dart';
 import 'package:dexter/theme/theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+List<Product> allProducts = [];
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -14,54 +17,24 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<Product> products = categoryFilter("All");
-
-  static List<String> categories = [
-    "All",
-    "Shoes",
-    "Bags",
-    "Shirts",
-    "Trousers",
-    "Cardigans"
-  ];
+  static List<String> categories = ["All"];
   static int selectedIndex = 0;
 
-  Widget buildCategory(int index) {
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          selectedIndex = index;
-          products = categoryFilter(categories[selectedIndex]);
-        });
-      },
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              categories[index],
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: selectedIndex == index
-                    ? AppTheme.primary
-                    : AppTheme.secondary,
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.only(top: 16.0 / 4),
-              height: 2,
-              width: 30,
-              color: selectedIndex == index ? Colors.black : Colors.transparent,
-            )
-          ],
-        ),
-      ),
-    );
-  }
+  List<Product> products = [];
 
   @override
   Widget build(BuildContext context) {
+    var productsProvider = Provider.of<ProductProvider>(context);
+    allProducts = productsProvider.products;
+
+    products = categoryFilter(allProducts, categories[selectedIndex]);
+
+    for (var element in productsProvider.buildCategories()) {
+      if (!categories.contains(element)) {
+        categories.add(element);
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
           elevation: 0,
@@ -108,7 +81,42 @@ class _HomeScreenState extends State<HomeScreen> {
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: categories.length,
-                itemBuilder: (context, index) => buildCategory(index),
+                itemBuilder: (context, index) {
+                  return InkWell(
+                    onTap: (() {
+                      setState(() {
+                        selectedIndex = index; // Update selected index
+                        products = categoryFilter(
+                            allProducts, categories[selectedIndex]);
+                      });
+                    }),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            categories[index],
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: selectedIndex == index
+                                  ? AppTheme.primary
+                                  : AppTheme.secondary,
+                            ),
+                          ),
+                          Container(
+                            margin: const EdgeInsets.only(top: 16.0 / 4),
+                            height: 2,
+                            width: 30,
+                            color: selectedIndex == index
+                                ? Colors.black
+                                : Colors.transparent,
+                          )
+                        ],
+                      ),
+                    ),
+                  );
+                },
               ),
             ),
           ),
@@ -129,8 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
 // Custom search delegate
 
 class CustomSearchDelegate extends SearchDelegate {
-  List<String> searchTerms =
-      ProductProvider.instance.products.map((e) => e.name).toList();
+  List<String> searchTerms = allProducts.map((e) => e.name).toList();
 
   @override
   List<Widget>? buildActions(BuildContext context) {
@@ -177,13 +184,14 @@ class CustomSearchDelegate extends SearchDelegate {
             childAspectRatio: 0.75,
           ),
           itemBuilder: (context, index) => ProductCard(
-            product: ProductProvider.instance.findByName(matchQuery[index])!,
+            product: allProducts
+                .firstWhere((element) => element.name == matchQuery[index]),
             onTapCallback: () => Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => DetailScreen(
-                  product:
-                      ProductProvider.instance.findByName(matchQuery[index])!,
+                  product: allProducts.firstWhere(
+                      (element) => element.name == matchQuery[index]),
                 ),
               ),
             ),
@@ -215,13 +223,14 @@ class CustomSearchDelegate extends SearchDelegate {
             childAspectRatio: 0.75,
           ),
           itemBuilder: (context, index) => ProductCard(
-            product: ProductProvider.instance.findByName(matchQuery[index])!,
+            product: allProducts
+                .firstWhere((element) => element.name == matchQuery[index]),
             onTapCallback: () => Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => DetailScreen(
-                  product:
-                      ProductProvider.instance.findByName(matchQuery[index])!,
+                  product: allProducts.firstWhere(
+                      (element) => element.name == matchQuery[index]),
                 ),
               ),
             ),

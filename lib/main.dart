@@ -14,7 +14,7 @@ void main() async {
 
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (_) => AuthenticationProvider.instance),
-    ChangeNotifierProvider(create: (_) => ProductProvider.instance),
+    ChangeNotifierProvider(create: (_) => ProductProvider()),
     ChangeNotifierProvider(create: (_) => CartProvider()),
     ChangeNotifierProvider(create: (_) => NotificationsProvider()),
   ], child: MyApp()));
