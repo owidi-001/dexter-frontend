@@ -228,20 +228,20 @@ class _DetailScreenState extends State<DetailScreen> {
                               ),
                               const SizedBox(width: 50.0),
                               Expanded(
-                                child:
-                                    widget.product.image.toString().isNotEmpty
-                                        ? Image.memory(
-                                            const Base64Decoder()
-                                                .convert(widget.product.image),
-                                            fit: BoxFit.fill,
-                                          )
-                                        : Container(
-                                            decoration: BoxDecoration(
-                                                color: AppTheme.primary,
-                                                borderRadius:
-                                                    BorderRadius.circular(12)),
-                                          ),
-                              )
+                                  child: widget.product.image
+                                          .toString()
+                                          .isNotEmpty
+                                      ? Image.memory(
+                                          const Base64Decoder()
+                                              .convert(widget.product.image),
+                                          fit: BoxFit.fill,
+                                        )
+                                      : Container(
+                                          decoration: BoxDecoration(
+                                              color: AppTheme.primary,
+                                              borderRadius:
+                                                  BorderRadius.circular(12)),
+                                        ))
                             ],
                           )
                         ],

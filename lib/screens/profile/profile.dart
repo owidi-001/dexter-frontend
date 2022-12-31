@@ -115,38 +115,38 @@ class Profile extends StatelessWidget {
               const SizedBox(
                 height: 24,
               ),
-              InkWell(
-                onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: ((context) => const AllProducts()))),
-                child: Container(
-                  margin: const EdgeInsets.symmetric(vertical: 8.0),
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 18.0, horizontal: 16.0),
-                  decoration: BoxDecoration(
-                      color: AppTheme.gradient,
-                      borderRadius: BorderRadius.circular(12)),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: const [
-                      Icon(
-                        Icons.person,
-                        color: AppTheme.primary,
-                        size: 28,
-                      ),
-                      SizedBox(
-                        width: 24,
-                      ),
-                      Text(
-                        "My Account",
-                        style: TextStyle(color: AppTheme.primary),
-                      )
-                    ],
-                  ),
-                ),
-              ),
+              // InkWell(
+              //   onTap: () => Navigator.push(
+              //       context,
+              //       MaterialPageRoute(
+              //           builder: ((context) => const AllProducts()))),
+              //   child: Container(
+              //     margin: const EdgeInsets.symmetric(vertical: 8.0),
+              //     padding: const EdgeInsets.symmetric(
+              //         vertical: 18.0, horizontal: 16.0),
+              //     decoration: BoxDecoration(
+              //         color: AppTheme.gradient,
+              //         borderRadius: BorderRadius.circular(12)),
+              //     child: Row(
+              //       mainAxisAlignment: MainAxisAlignment.start,
+              //       crossAxisAlignment: CrossAxisAlignment.center,
+              //       children: const [
+              //         Icon(
+              //           Icons.person,
+              //           color: AppTheme.primary,
+              //           size: 28,
+              //         ),
+              //         SizedBox(
+              //           width: 24,
+              //         ),
+              //         Text(
+              //           "My Account",
+              //           style: TextStyle(color: AppTheme.primary),
+              //         )
+              //       ],
+              //     ),
+              //   ),
+              // ),
               user.isStaff
                   ? InkWell(
                       onTap: () => Navigator.push(
