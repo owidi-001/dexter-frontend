@@ -4,6 +4,7 @@ import 'package:dexter/models/cart_model.dart';
 import 'package:dexter/providers/cart_provider.dart';
 import 'package:dexter/theme/theme.dart';
 import 'package:dexter/widgets/build_counter_widget.dart';
+import 'package:dexter/widgets/show_message_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -78,7 +79,13 @@ class CartItemWidget extends StatelessWidget {
                     buildOutlineButton(
                         icon: Icons.add,
                         press: () {
-                          cartProvider.updateCart(item, item.quantity + 1);
+                          if (item.quantity < item.product.quantity) {
+                            cartProvider.updateCart(item, item.quantity + 1);
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                snackMessage(true,
+                                    "Maximum available quantity reached!"));
+                          }
                         }),
                   ],
                 )
