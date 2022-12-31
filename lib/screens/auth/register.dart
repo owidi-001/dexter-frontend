@@ -107,6 +107,8 @@ class RegistrationScreen extends StatelessWidget {
         res.when(error: (error) {
           ScaffoldMessenger.of(context)
               .showSnackBar(snackMessage(false, error.message));
+          authProvider
+              .authenticationChanged(AuthenticationStatus.unAuthenticated);
         }, success: (data) {
           ScaffoldMessenger.of(context)
               .showSnackBar(snackMessage(true, "Registration successful"));

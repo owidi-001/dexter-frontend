@@ -323,7 +323,7 @@ class _AllProductsState extends State<AllProducts> {
 
     response.when(error: (error) {
       if (kDebugMode) {
-        print("AN error occured");
+        print("An error occured");
         print(error.message);
       }
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -334,8 +334,8 @@ class _AllProductsState extends State<AllProducts> {
         print("It was successful");
         print(data);
       }
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('Product Updated successfully!'),
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('${data.name} updated successfully!'),
       ));
       Provider.of<ProductProvider>(context, listen: false).refresh();
       Navigator.pop(context);
@@ -345,12 +345,23 @@ class _AllProductsState extends State<AllProducts> {
   // Delete an item
   void _deleteItem(int id) async {
     // Call service to delete item with the specified id
-    AppService().productDelete(data: {"item": id});
+    var response = await AppService().productDelete(data: {"product": id});
 
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-      content: Text('Successfully deleted a menu!'),
-    ));
-    Provider.of<ProductProvider>(context).refresh();
+    response.when(error: (error) {
+      if (kDebugMode) {
+        print("An error occured");
+        print(error.message);
+      }
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('An error occurred when deleting product!'),
+      ));
+    }, success: (data) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('${data.name} deleted successfully!'),
+      ));
+      Provider.of<ProductProvider>(context, listen: false).refresh();
+      Navigator.pop(context);
+    });
   }
 
   @override
@@ -402,7 +413,6 @@ class _AllProductsState extends State<AllProducts> {
                     ),
                     child: InkWell(
                       onTap: () {
-                        print("Item clicked");
                         _showForm(item.id);
                       },
                       child: Column(

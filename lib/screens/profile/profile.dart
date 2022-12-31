@@ -1,6 +1,7 @@
 import 'package:dexter/models/user_model.dart';
 import 'package:dexter/providers/auth_provider.dart';
 import 'package:dexter/providers/notifications_provider.dart';
+import 'package:dexter/screens/auth/login.dart';
 import 'package:dexter/screens/profile/pages/all_products.dart';
 import 'package:dexter/screens/profile/pages/help_web_view.dart';
 import 'package:dexter/screens/profile/pages/notifications.dart';
@@ -271,7 +272,11 @@ class Profile extends StatelessWidget {
                             userProvider.logout();
                             ScaffoldMessenger.of(context).showSnackBar(
                                 snackMessage(true, "User logged out!"));
-                            Navigator.pop(context);
+                            // Navigator.pop(context);
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: ((context) => LoginScreen())));
                           },
                         ),
                         BasicDialogAction(

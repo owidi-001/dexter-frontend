@@ -8,6 +8,7 @@ import 'package:dexter/widgets/appButtonWidget.dart';
 import 'package:dexter/widgets/bottomNavigationWidget.dart';
 import 'package:dexter/widgets/form_field_decorator.dart';
 import 'package:dexter/widgets/show_message_widget.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -52,6 +53,57 @@ class LoginScreen extends StatelessWidget {
       textInputAction: TextInputAction.done,
       decoration: buildInputDecoration("Password", Icons.lock),
     );
+
+    void login(BuildContext context) async {
+      final form = _formkey.currentState;
+
+      if (form!.validate()) {
+        form.save();
+
+        ScaffoldMessenger.of(context)
+            .showSnackBar(snackMessage(true, "Please wait authenticating ..."));
+
+        // Update authentication status
+        AuthenticationProvider.instance
+            .authenticationChanged(AuthenticationStatus.authenticating);
+
+        final res = await AppService().login(data: {
+          "email": _emailController.text,
+          "password": _passwordController.text
+        });
+        res.when(
+          error: (error) {
+            if (kDebugMode) {
+              print("An error occured");
+              print(error.message);
+            }
+            ScaffoldMessenger.of(context).showSnackBar(
+              snackMessage(false, "Incorrect email or password!"),
+            );
+            authProvider
+                .authenticationChanged(AuthenticationStatus.unAuthenticated);
+          },
+          success: (data) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              snackMessage(true, "Login Success"),
+            );
+
+            AuthenticationProvider.instance.loginUser(
+                user: data, authToken: data.token, isStaff: data.isStaff);
+
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: ((context) => BottomNavigationWidget()),
+              ),
+            );
+          },
+        );
+      } else {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(snackMessage(false, 'Invalid form input!'));
+      }
+    }
 
     return Scaffold(
       backgroundColor: AppTheme.white,
@@ -156,50 +208,5 @@ class LoginScreen extends StatelessWidget {
         ),
       )),
     );
-  }
-
-  void login(BuildContext context) async {
-    final form = _formkey.currentState;
-
-    if (form!.validate()) {
-      form.save();
-
-      ScaffoldMessenger.of(context)
-          .showSnackBar(snackMessage(true, "Please wait authenticating ..."));
-
-      // Update authentication status
-      AuthenticationProvider.instance
-          .authenticationChanged(AuthenticationStatus.authenticating);
-
-      final res = await AppService().login(data: {
-        "email": _emailController.text,
-        "password": _passwordController.text
-      });
-      res.when(
-        error: (error) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            snackMessage(false, error.message),
-          );
-        },
-        success: (data) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            snackMessage(true, "Login Success"),
-          );
-
-          AuthenticationProvider.instance.loginUser(
-              user: data, authToken: data.token, isStaff: data.isStaff);
-
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: ((context) => BottomNavigationWidget()),
-            ),
-          );
-        },
-      );
-    } else {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(snackMessage(false, 'Invalid form input!'));
-    }
   }
 }
