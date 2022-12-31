@@ -1,9 +1,12 @@
+import 'package:dexter/models/cart_model.dart';
 import 'package:dexter/providers/cart_provider.dart';
+import 'package:dexter/services/app_service.dart';
 import 'package:dexter/theme/theme.dart';
 import 'package:dexter/widgets/appButtonWidget.dart';
 import 'package:dexter/widgets/cart_item_widget.dart';
 import 'package:dexter/widgets/show_message_widget.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -213,6 +216,10 @@ class _CartScreenState extends State<CartScreen> {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                       snackMessage(false, "Your cart is empty"))
                                 }
+                              else
+                                {
+                                  handleSales(cartProvider),
+                                }
                             }),
                   )
                 : const SliverToBoxAdapter(),
@@ -224,5 +231,35 @@ class _CartScreenState extends State<CartScreen> {
         ),
       ),
     );
+  }
+
+  // Save cart updates
+  // payment handle
+  Future<void> handleSales(cartProvider) async {
+    Map<String, dynamic> data = {
+      "items": cartProvider.items
+          .map<Map<String, dynamic>>((json) => CartItemModel.toMap(json))
+          .toList(),
+    };
+
+    var response = await AppService().saveOrder(data: data);
+
+    response.when(error: (error) {
+      if (kDebugMode) {
+        print("AN error occured");
+        print(error.message);
+      }
+      ScaffoldMessenger.of(context)
+          .showSnackBar(snackMessage(false, "Failed to save cart!"));
+    }, success: (date) {
+      if (kDebugMode) {
+        print(data);
+      }
+      ScaffoldMessenger.of(context)
+          .showSnackBar(snackMessage(true, "Sales confirmed successfully"));
+
+      // Clear cart
+      cartProvider.resetCart();
+    });
   }
 }

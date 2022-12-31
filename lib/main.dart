@@ -2,7 +2,7 @@ import 'package:dexter/providers/auth_provider.dart';
 import 'package:dexter/providers/cart_provider.dart';
 import 'package:dexter/providers/notifications_provider.dart';
 import 'package:dexter/providers/product_provider.dart';
-import 'package:dexter/widgets/bottomNavigationWidget.dart';
+import 'package:dexter/screens/auth/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: BottomNavigationWidget(),
+      home: const SplashScreen(),
     );
   }
 }

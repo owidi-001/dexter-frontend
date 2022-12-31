@@ -5,7 +5,9 @@ import 'package:dexter/screens/profile/pages/all_products.dart';
 import 'package:dexter/screens/profile/pages/help_web_view.dart';
 import 'package:dexter/screens/profile/pages/notifications.dart';
 import 'package:dexter/theme/theme.dart';
+import 'package:dexter/widgets/show_message_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dialogs/flutter_dialogs.dart';
 import 'package:provider/provider.dart';
 
 class Profile extends StatelessWidget {
@@ -144,70 +146,74 @@ class Profile extends StatelessWidget {
               //     ),
               //   ),
               // ),
-              InkWell(
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: ((context) => const AllProducts()),
-                  ),
-                ),
-                child: Container(
-                  margin: const EdgeInsets.symmetric(vertical: 8.0),
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 18.0, horizontal: 16.0),
-                  decoration: BoxDecoration(
-                      color: AppTheme.gradient,
-                      borderRadius: BorderRadius.circular(12)),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: const [
-                      Icon(
-                        Icons.dashboard_customize_rounded,
-                        color: AppTheme.primary,
-                        size: 28,
+              user.isStaff
+                  ? InkWell(
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: ((context) => const AllProducts()),
+                        ),
                       ),
-                      SizedBox(
-                        width: 24,
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(vertical: 8.0),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 18.0, horizontal: 16.0),
+                        decoration: BoxDecoration(
+                            color: AppTheme.gradient,
+                            borderRadius: BorderRadius.circular(12)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: const [
+                            Icon(
+                              Icons.dashboard_customize_rounded,
+                              color: AppTheme.primary,
+                              size: 28,
+                            ),
+                            SizedBox(
+                              width: 24,
+                            ),
+                            Text(
+                              "My Products",
+                              style: TextStyle(color: AppTheme.primary),
+                            )
+                          ],
+                        ),
                       ),
-                      Text(
-                        "My Products",
-                        style: TextStyle(color: AppTheme.primary),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              InkWell(
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: ((context) => const Notifications()),
-                  ),
-                ),
-                child: Container(
-                  margin: const EdgeInsets.symmetric(vertical: 8.0),
-                  padding: const EdgeInsets.only(
-                      top: 18.0, bottom: 18.0, right: 16.0),
-                  decoration: BoxDecoration(
-                      color: AppTheme.gradient,
-                      borderRadius: BorderRadius.circular(12)),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: const [
-                      NotificationIcon(),
-                      SizedBox(
-                        width: 16,
+                    )
+                  : Container(),
+              user.isStaff
+                  ? InkWell(
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: ((context) => const Notifications()),
+                        ),
                       ),
-                      Text(
-                        "Notifications",
-                        style: TextStyle(color: AppTheme.primary),
-                      )
-                    ],
-                  ),
-                ),
-              ),
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(vertical: 8.0),
+                        padding: const EdgeInsets.only(
+                            top: 18.0, bottom: 18.0, right: 16.0),
+                        decoration: BoxDecoration(
+                            color: AppTheme.gradient,
+                            borderRadius: BorderRadius.circular(12)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: const [
+                            NotificationIcon(),
+                            SizedBox(
+                              width: 16,
+                            ),
+                            Text(
+                              "Notifications",
+                              style: TextStyle(color: AppTheme.primary),
+                            )
+                          ],
+                        ),
+                      ),
+                    )
+                  : Container(),
               InkWell(
                 onTap: () => Navigator.push(
                   context,
@@ -236,6 +242,75 @@ class Profile extends StatelessWidget {
                       ),
                       Text(
                         "Help",
+                        style: TextStyle(color: AppTheme.primary),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  showPlatformDialog(
+                    context: context,
+                    builder: (context) => BasicDialogAlert(
+                      title: const Text(
+                        "Logout confirmation",
+                        style: TextStyle(color: AppTheme.primary),
+                      ),
+                      content: const Text(
+                          "Confirm the action to clear login details from the app?"),
+                      actions: <Widget>[
+                        BasicDialogAction(
+                          title: const Text(
+                            "Logout",
+                            style: TextStyle(
+                                color: AppTheme.primary, fontSize: 18),
+                          ),
+                          onPressed: () async {
+                            // Make notification read
+                            userProvider.logout();
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                snackMessage(true, "User logged out!"));
+                            Navigator.pop(context);
+                          },
+                        ),
+                        BasicDialogAction(
+                          title: const Text(
+                            "Cancel",
+                            style: TextStyle(
+                                color: AppTheme.primary, fontSize: 18),
+                          ),
+                          onPressed: () async {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                snackMessage(true, "Logout cancelled!"));
+                            Navigator.pop(context);
+                          },
+                        ),
+                      ],
+                    ),
+                  );
+                },
+                child: Container(
+                  margin: const EdgeInsets.symmetric(vertical: 8.0),
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 18.0, horizontal: 16.0),
+                  decoration: BoxDecoration(
+                      color: AppTheme.gradient,
+                      borderRadius: BorderRadius.circular(12)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: const [
+                      Icon(
+                        Icons.logout,
+                        color: AppTheme.primary,
+                        size: 28,
+                      ),
+                      SizedBox(
+                        width: 24,
+                      ),
+                      Text(
+                        "Logout",
                         style: TextStyle(color: AppTheme.primary),
                       )
                     ],

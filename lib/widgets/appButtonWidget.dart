@@ -30,3 +30,38 @@ class AppButtonWidget extends StatelessWidget {
     );
   }
 }
+
+class ButtonLoading extends StatelessWidget {
+  final String title;
+  final Function() function;
+  const ButtonLoading({super.key, required this.title, required this.function});
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      elevation: 5,
+      borderRadius: const BorderRadius.all(Radius.circular(10)),
+      color: AppTheme.primary,
+      child: MaterialButton(
+          onPressed: function,
+          padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+          minWidth: double.infinity,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                title,
+                style: const TextStyle(
+                    color: AppTheme.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18),
+              ),
+              const CircularProgressIndicator(
+                color: AppTheme.white,
+              ),
+            ],
+          )),
+    );
+  }
+}

@@ -22,7 +22,6 @@ class _DetailScreenState extends State<DetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    
     Size size = MediaQuery.of(context).size;
     var cartProvider = Provider.of<CartProvider>(context);
 
@@ -166,17 +165,18 @@ class _DetailScreenState extends State<DetailScreen> {
                             title: "Add to cart",
                             onPressedCallBack: () {
                               // check if item in cart
-                              cartProvider.add(CartItemModel(
-                                  product: widget.product,
-                                  quantity: numOfItems));
-
-                              snackMessage(
-                                  true, "${widget.product.name} added to cart");
+                              cartProvider.add(
+                                CartItemModel(
+                                    product: widget.product,
+                                    quantity: numOfItems),
+                              );
 
                               // add item confirmation
                               ScaffoldMessenger.of(context).showSnackBar(
                                   snackMessage(true,
-                                      "${widget.product.name} Added to cart"));
+                                      "${widget.product.name} added to cart"));
+
+                              Navigator.pop(context);
                             },
                           )),
                         )

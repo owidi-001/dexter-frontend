@@ -1,9 +1,9 @@
+import 'dart:convert';
+
 import 'package:dexter/models/cart_model.dart';
 import 'package:dexter/providers/cart_provider.dart';
 import 'package:dexter/theme/theme.dart';
-import 'package:dexter/utils/constants.dart';
 import 'package:dexter/widgets/build_counter_widget.dart';
-import 'package:dexter/widgets/show_message_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -29,12 +29,16 @@ class CartItemWidget extends StatelessWidget {
                     color: AppTheme.white,
                     borderRadius: BorderRadius.all(Radius.circular(12))),
                 alignment: Alignment.center,
-                // child: Image.network(
-                //   "$baseUrl${item.product.image}",
-                // ),
-                child: Image.asset(
-                  "$baseUrl${item.product.image}",
-                ),
+                child: item.product.image.toString().isNotEmpty
+                    ? Image.memory(
+                        const Base64Decoder().convert(item.product.image),
+                        fit: BoxFit.fill,
+                      )
+                    : Container(
+                        decoration: BoxDecoration(
+                            color: AppTheme.primary,
+                            borderRadius: BorderRadius.circular(12)),
+                      ),
               )),
           const SizedBox(
             width: 10,

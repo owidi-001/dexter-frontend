@@ -29,26 +29,6 @@ Material submitButton(String title, Function() function) {
   );
 }
 
-// Upload
-// Material upload(String title, Function() function) {
-//   return Material(
-//     elevation: 0,
-//     borderRadius: const BorderRadius.all(Radius.circular(10)),
-//     color: AppTheme.secondary,
-//     child: MaterialButton(
-//       onPressed: function,
-//       padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-//       minWidth: double.infinity,
-//       child: Text(
-//         textAlign: TextAlign.start,
-//         title,
-//         style: const TextStyle(
-//             color: AppTheme.white, fontWeight: FontWeight.bold, fontSize: 18),
-//       ),
-//     ),
-//   );
-// }
-
 OutlinedButton uploadButton(String title, Function() function, IconData icon) {
   return OutlinedButton.icon(
     onPressed: function,

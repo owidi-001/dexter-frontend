@@ -1,5 +1,3 @@
-
-
 import 'package:dexter/models/products_model.dart';
 
 class CartItemModel {

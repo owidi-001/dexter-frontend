@@ -29,6 +29,7 @@ class _AllProductsState extends State<AllProducts> {
   final TextEditingController _priceController = TextEditingController();
   final TextEditingController _quantityController = TextEditingController();
   final TextEditingController _minQuantityController = TextEditingController();
+  final TextEditingController _typeController = TextEditingController();
 
   final ImagePicker _picker = ImagePicker();
   XFile? image;
@@ -45,12 +46,14 @@ class _AllProductsState extends State<AllProducts> {
       _priceController.text = "${existingProducts.price}";
       _quantityController.text = "${existingProducts.quantity}";
       _minQuantityController.text = "${existingProducts.minQuantity}";
+      _typeController.text = existingProducts.type;
     } else {
       // Clear the text fields
       _nameController.text = '';
       _priceController.text = '';
       _quantityController.text = '';
       _minQuantityController.text = '';
+      _typeController.text = '';
     }
 
     // show modalsheet
@@ -95,6 +98,10 @@ class _AllProductsState extends State<AllProducts> {
               TextField(
                 controller: _minQuantityController,
                 decoration: buildInputDecoration("minQuantity", Icons.numbers),
+              ),
+              TextField(
+                controller: _typeController,
+                decoration: buildInputDecoration("Type", Icons.type_specimen),
               ),
               const SizedBox(
                 height: 20,
@@ -237,10 +244,10 @@ class _AllProductsState extends State<AllProducts> {
       Uint8List imagebytes = await imagefile.readAsBytes(); //convert to bytes
       imageData = base64.encode(imagebytes); //convert bytes to base64 string
 
-      if (kDebugMode) {
-        print("The picked image is");
-        print(imageData);
-      }
+      // if (kDebugMode) {
+      //   print("The picked image is");
+      //   print(imageData);
+      // }
 
       // Create function
       Map<String, dynamic> data = {
@@ -248,13 +255,36 @@ class _AllProductsState extends State<AllProducts> {
         'price': _priceController.text,
         'quantity': _quantityController.text,
         'minQuantity': _minQuantityController.text,
+        'type': _typeController.text,
         'image': imageData
       };
-      AppService().productCreate(data: data);
 
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('Product added successfully!'),
-      ));
+      if (kDebugMode) {
+        print("pre post");
+        print(data);
+      }
+
+      var response = await AppService().productCreate(data: data);
+
+      response.when(error: (error) {
+        if (kDebugMode) {
+          print("An error occured");
+          print(error.message);
+        }
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('An error occurred when creating the product!'),
+        ));
+      }, success: (data) {
+        if (kDebugMode) {
+          print("It was successful");
+          print(data);
+        }
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Product created successfully!'),
+        ));
+        Provider.of<ProductProvider>(context, listen: false).refresh();
+        Navigator.pop(context);
+      });
     } else {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('No image selected!'),
@@ -264,26 +294,58 @@ class _AllProductsState extends State<AllProducts> {
 
   // Update an existing journal
   Future<void> _updateMenu(int id) async {
+    // convert image to base64
+    String imageData = "empty";
+
+    if (image != null) {
+      File imagefile = File(image!.path); //convert Path to File
+      Uint8List imagebytes = await imagefile.readAsBytes(); //convert to bytes
+      imageData = base64.encode(imagebytes); //convert bytes to base64 string
+
+      if (kDebugMode) {
+        print("The picked image is");
+        print(imageData);
+      }
+    }
+
     // Update function
     Map<String, dynamic> data = {
+      'product': id,
       'name': _nameController.text,
       'price': _priceController.text,
       'quantity': _quantityController.text,
-      'minQuantity': _minQuantityController.text
+      'minQuantity': _minQuantityController.text,
+      'type': _typeController.text,
+      'image': imageData
     };
 
-    AppService().productUpdate(id: id, data: data);
+    var response = await AppService().productUpdate(data: data);
 
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-      content: Text('Product Updated successfully!'),
-    ));
-    Provider.of<ProductProvider>(context).refresh();
+    response.when(error: (error) {
+      if (kDebugMode) {
+        print("AN error occured");
+        print(error.message);
+      }
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('An error occurred when updating product!'),
+      ));
+    }, success: (data) {
+      if (kDebugMode) {
+        print("It was successful");
+        print(data);
+      }
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Product Updated successfully!'),
+      ));
+      Provider.of<ProductProvider>(context, listen: false).refresh();
+      Navigator.pop(context);
+    });
   }
 
   // Delete an item
   void _deleteItem(int id) async {
     // Call service to delete item with the specified id
-    AppService().productDelete(data: id);
+    AppService().productDelete(data: {"item": id});
 
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
       content: Text('Successfully deleted a menu!'),

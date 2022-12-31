@@ -18,8 +18,12 @@ class Product {
       required this.image,
       required this.type});
 
+  // 'created_by': 1, 'created_on': '2022-12-26T11:27:08.450566Z'
+
   // factory from json
   factory Product.fromJson(Map<String, dynamic> json) {
+    print(json);
+
     return Product(
         id: json["id"],
         name: json["name"],

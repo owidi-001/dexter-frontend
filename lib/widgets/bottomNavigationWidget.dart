@@ -2,7 +2,6 @@ import 'package:circular_bottom_navigation/circular_bottom_navigation.dart';
 import 'package:circular_bottom_navigation/tab_item.dart';
 import 'package:dexter/screens/cart/cart.dart';
 import 'package:dexter/screens/home/home.dart';
-import 'package:dexter/screens/profile/pages/all_products.dart';
 import 'package:dexter/screens/profile/profile.dart';
 import 'package:dexter/theme/theme.dart';
 import 'package:flutter/cupertino.dart';

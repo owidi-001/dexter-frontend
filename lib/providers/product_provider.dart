@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 import 'package:dexter/models/products_model.dart';
 import 'package:dexter/services/app_service.dart';
 import 'package:dexter/utils/status.dart';
@@ -26,16 +24,9 @@ class ProductProvider extends ChangeNotifier {
   Future<void> _initFetch() async {
     final res = await AppService().fetchProducts();
 
-    if (kDebugMode) {
-      print(res);
-    }
-
     res.when(error: (error) {
       status = LoadingStatus.loadingFailure;
     }, success: (data) {
-      if (kDebugMode) {
-        print(data);
-      }
       setProducts(data);
       status = LoadingStatus.loadingSuccess;
     });
@@ -46,10 +37,6 @@ class ProductProvider extends ChangeNotifier {
   // Build categories
   List<String> buildCategories() {
     List<String> categories = _products.map((e) => e.type).toList();
-
-    if (kDebugMode) {
-      print(categories);
-    }
     return categories;
   }
 
