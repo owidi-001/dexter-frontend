@@ -50,9 +50,9 @@ class HttpClient {
         der != null ? der(results.data) : results.data,
       );
     } catch (e) {
-      if (kDebugMode) {
-        print(e);
-      }
+      // if (kDebugMode) {
+      //   print(e);
+      // }
       return HttpResult.error(Failure.getException(e));
     }
   }

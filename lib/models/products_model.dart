@@ -22,7 +22,7 @@ class Product {
 
   // factory from json
   factory Product.fromJson(Map<String, dynamic> json) {
-    print(json);
+    // print(json);
 
     return Product(
         id: json["id"],

@@ -20,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 1), initializeApp);
+    Future.delayed(const Duration(seconds: 0), initializeApp);
     // initializeApp();
   }
 
@@ -32,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen> {
         child: CircleAvatar(
           backgroundColor: Colors.white,
           backgroundImage: AssetImage(
-            "assets/images/logo.png",
+            "assets/icon/icon.png",
           ),
           radius: 48,
         ),

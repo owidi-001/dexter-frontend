@@ -74,10 +74,10 @@ class LoginScreen extends StatelessWidget {
         });
         res.when(
           error: (error) {
-            if (kDebugMode) {
-              print("An error occured");
-              print(error.message);
-            }
+            // if (kDebugMode) {
+            //   print("An error occured");
+            //   print(error.message);
+            // }
             ScaffoldMessenger.of(context).showSnackBar(
               snackMessage(false, "Incorrect email or password!"),
             );

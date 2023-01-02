@@ -263,18 +263,18 @@ class _AllProductsState extends State<AllProducts> {
         'image': imageData
       };
 
-      if (kDebugMode) {
-        print("pre post");
-        print(data);
-      }
+      // if (kDebugMode) {
+      //   print("pre post");
+      //   print(data);
+      // }
 
       var response = await AppService().productCreate(data: data);
 
       response.when(error: (error) {
-        if (kDebugMode) {
-          print("An error occured");
-          print(error.message);
-        }
+        // if (kDebugMode) {
+        //   print("An error occured");
+        //   print(error.message);
+        // }
 
         ScaffoldMessenger.of(context).showSnackBar(snackMessage(
             false, 'An error occurred when creating the product!'));
@@ -305,10 +305,10 @@ class _AllProductsState extends State<AllProducts> {
       Uint8List imagebytes = await imagefile.readAsBytes(); //convert to bytes
       imageData = base64.encode(imagebytes); //convert bytes to base64 string
 
-      if (kDebugMode) {
-        print("The picked image is");
-        print(imageData);
-      }
+      // if (kDebugMode) {
+      //   print("The picked image is");
+      //   print(imageData);
+      // }
     }
 
     // Update function
@@ -325,18 +325,18 @@ class _AllProductsState extends State<AllProducts> {
     var response = await AppService().productUpdate(data: data);
 
     response.when(error: (error) {
-      if (kDebugMode) {
-        print("An error occured");
-        print(error.message);
-      }
+      // if (kDebugMode) {
+      //   print("An error occured");
+      //   print(error.message);
+      // }
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('An error occurred when updating product!'),
       ));
     }, success: (data) {
-      if (kDebugMode) {
-        print("It was successful");
-        print(data);
-      }
+      // if (kDebugMode) {
+      //   print("It was successful");
+      //   print(data);
+      // }
       ScaffoldMessenger.of(context).showSnackBar(
           snackMessage(false, '${data.name} updated successfully!'));
 
@@ -351,10 +351,10 @@ class _AllProductsState extends State<AllProducts> {
     var response = await AppService().productDelete(data: {"product": id});
 
     response.when(error: (error) {
-      if (kDebugMode) {
-        print("An error occured");
-        print(error.message);
-      }
+      // if (kDebugMode) {
+      //   print("An error occured");
+      //   print(error.message);
+      // }
       ScaffoldMessenger.of(context).showSnackBar(
           snackMessage(false, 'An error occurred when deleting product!'));
     }, success: (data) {

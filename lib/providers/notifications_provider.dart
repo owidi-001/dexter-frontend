@@ -27,16 +27,16 @@ class NotificationsProvider extends ChangeNotifier {
   Future<void> _initFetch() async {
     final res = await AppService().fetchNotifications();
 
-    if (kDebugMode) {
-      print(res);
-    }
+    // if (kDebugMode) {
+    //   print(res);
+    // }
 
     res.when(error: (error) {
       status = LoadingStatus.loadingFailure;
     }, success: (data) {
-      if (kDebugMode) {
-        print(data);
-      }
+      // if (kDebugMode) {
+      //   print(data);
+      // }
       setNotifications(data);
       status = LoadingStatus.loadingSuccess;
     });

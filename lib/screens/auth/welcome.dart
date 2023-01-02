@@ -22,7 +22,7 @@ class WelcomeScreen extends StatelessWidget {
                   const CircleAvatar(
                     backgroundColor: Colors.white,
                     backgroundImage: AssetImage(
-                      "assets/images/logo.png",
+                      "assets/icon/icon.png",
                     ),
                     radius: 48,
                   ),
@@ -32,7 +32,7 @@ class WelcomeScreen extends StatelessWidget {
                   Container(
                     margin: const EdgeInsets.symmetric(horizontal: 8),
                     child: const Text(
-                      "Having free time?",
+                      "Ready for business?",
                       textAlign: TextAlign.center,
                       style:
                           TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
@@ -44,7 +44,7 @@ class WelcomeScreen extends StatelessWidget {
                   Container(
                     margin: const EdgeInsets.symmetric(horizontal: 32),
                     child: const Text(
-                      "Get your a delivery task and pocket yourself something.",
+                      "Elevate your management tasks and get notified on transactions.",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           fontWeight: FontWeight.w500,

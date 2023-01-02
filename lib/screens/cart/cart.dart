@@ -246,16 +246,16 @@ class _CartScreenState extends State<CartScreen> {
     var response = await AppService().saveOrder(data: data);
 
     response.when(error: (error) {
-      if (kDebugMode) {
-        print("AN error occured");
-        print(error.message);
-      }
+      // if (kDebugMode) {
+      //   print("AN error occured");
+      //   print(error.message);
+      // }
       ScaffoldMessenger.of(context)
           .showSnackBar(snackMessage(false, "Failed to save cart!"));
     }, success: (date) {
-      if (kDebugMode) {
-        print(data);
-      }
+      // if (kDebugMode) {
+      //   print(data);
+      // }
       ScaffoldMessenger.of(context)
           .showSnackBar(snackMessage(true, "Sales confirmed successfully"));
 
