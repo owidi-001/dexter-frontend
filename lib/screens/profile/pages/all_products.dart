@@ -7,6 +7,7 @@ import 'package:dexter/services/app_service.dart';
 import 'package:dexter/theme/theme.dart';
 import 'package:dexter/widgets/appButtonWidget.dart';
 import 'package:dexter/widgets/form_field_decorator.dart';
+import 'package:dexter/widgets/show_message_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -99,6 +100,9 @@ class _AllProductsState extends State<AllProducts> {
                 controller: _minQuantityController,
                 decoration: buildInputDecoration("minQuantity", Icons.numbers),
               ),
+              const SizedBox(
+                height: 10,
+              ),
               TextField(
                 controller: _typeController,
                 decoration: buildInputDecoration("Type", Icons.type_specimen),
@@ -127,7 +131,7 @@ class _AllProductsState extends State<AllProducts> {
                           child: Text(
                             "Image from",
                             style: TextStyle(
-                                color: AppTheme.primary,
+                                color: AppTheme.secondary,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 18),
                           ),
@@ -154,11 +158,11 @@ class _AllProductsState extends State<AllProducts> {
                           },
                           icon: const Icon(
                             Icons.photo,
-                            color: AppTheme.primary,
+                            color: AppTheme.secondary,
                           ),
                           label: const Text(
                             "Camera",
-                            style: TextStyle(color: AppTheme.primary),
+                            style: TextStyle(color: AppTheme.secondary),
                           ),
                         ),
                         TextButton.icon(
@@ -169,11 +173,11 @@ class _AllProductsState extends State<AllProducts> {
                           },
                           icon: const Icon(
                             Icons.photo,
-                            color: AppTheme.primary,
+                            color: AppTheme.secondary,
                           ),
                           label: const Text(
                             "Gallery",
-                            style: TextStyle(color: AppTheme.primary),
+                            style: TextStyle(color: AppTheme.secondary),
                           ),
                         ),
                       ],
@@ -187,7 +191,7 @@ class _AllProductsState extends State<AllProducts> {
               Material(
                 elevation: 5,
                 borderRadius: const BorderRadius.all(Radius.circular(10)),
-                color: AppTheme.primary,
+                color: AppTheme.secondary,
                 child: MaterialButton(
                   onPressed: () async {
                     // Save new journal
@@ -271,24 +275,23 @@ class _AllProductsState extends State<AllProducts> {
           print("An error occured");
           print(error.message);
         }
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('An error occurred when creating the product!'),
-        ));
+
+        ScaffoldMessenger.of(context).showSnackBar(snackMessage(
+            false, 'An error occurred when creating the product!'));
       }, success: (data) {
-        if (kDebugMode) {
-          print("It was successful");
-          print(data);
-        }
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('Product created successfully!'),
-        ));
+        // if (kDebugMode) {
+        //   print("It was successful");
+        //   print(data);
+        // }
+        ScaffoldMessenger.of(context)
+            .showSnackBar(snackMessage(true, 'Product created successfully!'));
+
         Provider.of<ProductProvider>(context, listen: false).refresh();
         Navigator.pop(context);
       });
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('No image selected!'),
-      ));
+      ScaffoldMessenger.of(context)
+          .showSnackBar(snackMessage(false, 'No image selected!'));
     }
   }
 
@@ -334,9 +337,9 @@ class _AllProductsState extends State<AllProducts> {
         print("It was successful");
         print(data);
       }
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('${data.name} updated successfully!'),
-      ));
+      ScaffoldMessenger.of(context).showSnackBar(
+          snackMessage(false, '${data.name} updated successfully!'));
+
       Provider.of<ProductProvider>(context, listen: false).refresh();
       Navigator.pop(context);
     });
@@ -352,9 +355,8 @@ class _AllProductsState extends State<AllProducts> {
         print("An error occured");
         print(error.message);
       }
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('An error occurred when deleting product!'),
-      ));
+      ScaffoldMessenger.of(context).showSnackBar(
+          snackMessage(false, 'An error occurred when deleting product!'));
     }, success: (data) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text('${data.name} deleted successfully!'),
@@ -373,7 +375,7 @@ class _AllProductsState extends State<AllProducts> {
       appBar: AppBar(
           elevation: 0,
           centerTitle: true,
-          backgroundColor: AppTheme.primary,
+          backgroundColor: AppTheme.secondary,
           title: const Text(
             "All Products",
             textAlign: TextAlign.left,
@@ -389,10 +391,10 @@ class _AllProductsState extends State<AllProducts> {
                   _showForm(null);
                 }),
                 child: const CircleAvatar(
-                    backgroundColor: AppTheme.gradient,
+                    backgroundColor: AppTheme.light,
                     child: Icon(
                       CupertinoIcons.add_circled_solid,
-                      color: AppTheme.primary,
+                      color: AppTheme.secondary,
                     ))),
             const SizedBox(
               width: 18,
@@ -406,7 +408,7 @@ class _AllProductsState extends State<AllProducts> {
                 itemBuilder: (item) {
                   return Container(
                     decoration: const BoxDecoration(
-                      color: AppTheme.gradient,
+                      color: AppTheme.light,
                       borderRadius: BorderRadius.all(
                         Radius.circular(12),
                       ),
@@ -425,7 +427,7 @@ class _AllProductsState extends State<AllProducts> {
                                   )
                                 : Container(
                                     decoration: BoxDecoration(
-                                        color: AppTheme.primary,
+                                        color: AppTheme.secondary,
                                         borderRadius:
                                             BorderRadius.circular(12)),
                                   ),
@@ -457,7 +459,7 @@ class _AllProductsState extends State<AllProducts> {
                         onPressed: (() => _showForm(null)),
                         child: const Text(
                           "Add product",
-                          style: TextStyle(color: AppTheme.primary),
+                          style: TextStyle(color: AppTheme.secondary),
                         ))
                   ],
                 ),

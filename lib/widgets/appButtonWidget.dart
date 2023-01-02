@@ -16,7 +16,7 @@ class AppButtonWidget extends StatelessWidget {
     return Material(
       elevation: 5,
       borderRadius: const BorderRadius.all(Radius.circular(10)),
-      color: background ?? AppTheme.primary,
+      color: background ?? AppTheme.secondary,
       child: MaterialButton(
         onPressed: onPressedCallBack,
         padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
@@ -41,7 +41,7 @@ class ButtonLoading extends StatelessWidget {
     return Material(
       elevation: 5,
       borderRadius: const BorderRadius.all(Radius.circular(10)),
-      color: AppTheme.primary,
+      color: AppTheme.secondary,
       child: MaterialButton(
           onPressed: function,
           padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),

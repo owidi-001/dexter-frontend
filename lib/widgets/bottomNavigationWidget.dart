@@ -20,19 +20,19 @@ class _BottomNavigationWidgetState extends State<BottomNavigationWidget> {
   late CircularBottomNavigationController _navigationController;
 
   List<TabItem> tabItems = List.of([
-    TabItem(CupertinoIcons.house_alt_fill, "Shop", AppTheme.primary,
+    TabItem(CupertinoIcons.house_alt_fill, "Shop", AppTheme.secondary,
         labelStyle: const TextStyle(
-            color: AppTheme.primary,
+            color: AppTheme.secondary,
             fontWeight: FontWeight.w400,
             fontSize: 12)),
-    TabItem(CupertinoIcons.bag_fill, "Cart", AppTheme.primary,
+    TabItem(CupertinoIcons.bag_fill, "Cart", AppTheme.secondary,
         labelStyle: const TextStyle(
-            color: AppTheme.primary,
+            color: AppTheme.secondary,
             fontWeight: FontWeight.w400,
             fontSize: 12)),
-    TabItem(Icons.settings_applications, "BS Profile", AppTheme.primary,
+    TabItem(Icons.settings_applications, "BS Profile", AppTheme.secondary,
         labelStyle: const TextStyle(
-            color: AppTheme.primary,
+            color: AppTheme.secondary,
             fontWeight: FontWeight.w400,
             fontSize: 12)),
   ]);
@@ -54,7 +54,7 @@ class _BottomNavigationWidgetState extends State<BottomNavigationWidget> {
     return CircularBottomNavigation(
       tabItems,
       selectedPos: 0,
-      normalIconColor: Colors.grey,
+      normalIconColor: AppTheme.secondary,
       selectedIconColor: AppTheme.white,
       circleStrokeWidth: 0,
       controller: _navigationController,
@@ -95,7 +95,7 @@ class _BottomNavigationWidgetState extends State<BottomNavigationWidget> {
             Padding(
               padding: const EdgeInsets.only(bottom: 40),
               child: Container(
-                color: const Color(0xffe8f2fc),
+                color: AppTheme.white,
                 child: bodyContainer(),
               ),
             ),

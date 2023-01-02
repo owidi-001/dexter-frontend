@@ -5,6 +5,7 @@ import 'package:dexter/screens/home/components/body.dart';
 import 'package:dexter/screens/home/components/category_filter.dart';
 import 'package:dexter/screens/home/components/product_card.dart';
 import 'package:dexter/theme/theme.dart';
+import 'package:dexter/utils/greetings.utility.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -38,15 +39,15 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
           elevation: 0,
-          backgroundColor: AppTheme.primary,
+          backgroundColor: AppTheme.secondary,
           title: const Text(
             "Dexter",
             textAlign: TextAlign.left,
             style: TextStyle(
-              fontSize: 18,
-              fontFamily: 'Playfair',
-              fontWeight: FontWeight.w600,
-            ),
+                fontSize: 20,
+                fontFamily: 'Playfair',
+                fontWeight: FontWeight.w600,
+                color: AppTheme.white),
           ),
           actions: [
             InkWell(
@@ -57,10 +58,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   );
                 }),
                 child: const CircleAvatar(
-                    backgroundColor: AppTheme.gradient,
+                    backgroundColor: AppTheme.light,
                     child: Icon(
                       CupertinoIcons.search_circle_fill,
-                      color: AppTheme.primary,
+                      color: AppTheme.secondary,
+                      size: 28,
                     ))),
             const SizedBox(
               width: 18,
@@ -100,7 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: selectedIndex == index
-                                  ? AppTheme.primary
+                                  ? AppTheme.secondary
                                   : AppTheme.secondary,
                             ),
                           ),
@@ -122,9 +124,25 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
 
           // Body of product cards
-          Body(
-            products: products,
-          ),
+          productsProvider.products.isNotEmpty
+              ? Body(
+                  products: products,
+                )
+              : Container(
+                  height: MediaQuery.of(context).size.height * 0.3,
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 16.0, horizontal: 16),
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                      color: AppTheme.light,
+                      borderRadius: BorderRadius.circular(12.0)),
+                  child: const Center(
+                    child: Text(
+                      "You have not added any products yet!",
+                      style: TextStyle(color: AppTheme.secondary, fontSize: 20),
+                    ),
+                  ),
+                ),
           const SizedBox(
             height: 48,
           ),

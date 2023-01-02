@@ -16,7 +16,7 @@ class Notifications extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
           elevation: 0,
-          backgroundColor: AppTheme.primary,
+          backgroundColor: AppTheme.secondary,
           title: const Text(
             "Notifications",
             textAlign: TextAlign.left,
@@ -37,10 +37,10 @@ class Notifications extends StatelessWidget {
                   notificationsProvider.refresh();
                 }),
                 child: const CircleAvatar(
-                    backgroundColor: AppTheme.gradient,
+                    backgroundColor: AppTheme.light,
                     child: Icon(
                       CupertinoIcons.envelope_open_fill,
-                      color: AppTheme.primary,
+                      color: AppTheme.secondary,
                     ))),
             const SizedBox(
               width: 18,
@@ -68,12 +68,27 @@ class Notifications extends StatelessWidget {
                     const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
-                    color: AppTheme.gradient,
+                    color: AppTheme.light,
                     borderRadius: BorderRadius.circular(12.0)),
-                child: const Center(
-                  child: Text(
-                    "No notifications yet!",
-                    style: TextStyle(color: AppTheme.primary, fontSize: 20),
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        "No notifications yet!",
+                        style:
+                            TextStyle(color: AppTheme.secondary, fontSize: 20),
+                      ),
+                      TextButton(
+                          onPressed: () =>
+                              Future.delayed(const Duration(seconds: 1), () {
+                                notificationsProvider.refresh();
+                              }),
+                          child: const Text(
+                            "Refresh",
+                            style: TextStyle(color: AppTheme.secondary),
+                          ))
+                    ],
                   ),
                 ),
               ),

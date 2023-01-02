@@ -8,7 +8,7 @@ SnackBar snackMessage(bool success, String message, {int timeout = 1}) {
       style: const TextStyle(color: AppTheme.white),
     ),
     duration: Duration(seconds: timeout),
-    backgroundColor: success ? AppTheme.primary : AppTheme.secondary,
+    backgroundColor: success ? AppTheme.secondary : AppTheme.secondary,
     padding: const EdgeInsets.all(16.0),
     elevation: 10,
     behavior: SnackBarBehavior.floating,

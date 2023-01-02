@@ -142,7 +142,7 @@ class RegistrationScreen extends StatelessWidget {
             icon: const Icon(
               Icons.arrow_back,
               size: 24,
-              color: AppTheme.primary,
+              color: AppTheme.secondary,
             )),
       ),
       body: Center(
@@ -250,7 +250,7 @@ class RegistrationScreen extends StatelessWidget {
                         child: const Text(
                           "Sign in",
                           style: TextStyle(
-                              color: AppTheme.primary,
+                              color: AppTheme.secondary,
                               fontSize: 18,
                               fontWeight: FontWeight.normal),
                         ),

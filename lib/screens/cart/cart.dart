@@ -25,7 +25,7 @@ class _CartScreenState extends State<CartScreen> {
     return Scaffold(
       appBar: AppBar(
           elevation: 0,
-          backgroundColor: AppTheme.primary,
+          backgroundColor: AppTheme.secondary,
           title: const Text(
             "Cart",
             textAlign: TextAlign.left,
@@ -41,10 +41,11 @@ class _CartScreenState extends State<CartScreen> {
                   cartProvider.removeAll();
                 }),
                 child: const CircleAvatar(
-                    backgroundColor: AppTheme.gradient,
+                    backgroundColor: AppTheme.light,
                     child: Icon(
-                      CupertinoIcons.clear_circled_solid,
-                      color: AppTheme.primary,
+                      CupertinoIcons.clear_thick_circled,
+                      color: AppTheme.secondary,
+                      size: 28,
                     ))),
             const SizedBox(
               width: 18,
@@ -177,7 +178,7 @@ class _CartScreenState extends State<CartScreen> {
                                   const Text(
                                     "Total:",
                                     style: TextStyle(
-                                        color: AppTheme.primary,
+                                        color: AppTheme.secondary,
                                         fontSize: 18,
                                         fontWeight: FontWeight.bold),
                                   ),

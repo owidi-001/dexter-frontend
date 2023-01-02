@@ -3,6 +3,7 @@ import 'package:dexter/providers/cart_provider.dart';
 import 'package:dexter/providers/notifications_provider.dart';
 import 'package:dexter/providers/product_provider.dart';
 import 'package:dexter/screens/auth/splash.dart';
+import 'package:dexter/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Dexter app',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: AppTheme.secondary,
       ),
       home: const SplashScreen(),
     );

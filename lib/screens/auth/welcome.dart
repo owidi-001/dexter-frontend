@@ -69,7 +69,7 @@ class WelcomeScreen extends StatelessWidget {
                           textStyle: const TextStyle(
                               fontSize: 14, fontWeight: FontWeight.w500),
                           shape: const StadiumBorder(),
-                          backgroundColor: AppTheme.primary,
+                          backgroundColor: AppTheme.secondary,
                         ),
                         child: const Text("Start working")),
                   )

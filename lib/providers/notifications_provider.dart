@@ -44,6 +44,17 @@ class NotificationsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  // count Unread
+  int countUnread() {
+    int num = 0;
+    for (var element in items) {
+      if (!element.read) {
+        num += 1;
+      }
+    }
+    return num;
+  }
+
   // Get new notifications
   void refresh() async {
     await _initFetch();

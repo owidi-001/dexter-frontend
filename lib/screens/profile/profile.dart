@@ -22,7 +22,7 @@ class Profile extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
           elevation: 0,
-          backgroundColor: AppTheme.primary,
+          backgroundColor: AppTheme.secondary,
           title: const Text(
             "Profile",
             textAlign: TextAlign.left,
@@ -38,10 +38,10 @@ class Profile extends StatelessWidget {
             //       // _showForm(null);
             //     }),
             //     child: const CircleAvatar(
-            //         backgroundColor: AppTheme.gradient,
+            //         backgroundColor: AppTheme.light,
             //         child: Icon(
             //           CupertinoIcons.add_circled_solid,
-            //           color: AppTheme.primary,
+            //           color: AppTheme.secondary,
             //         ))),
             SizedBox(
               width: 18,
@@ -61,7 +61,7 @@ class Profile extends StatelessWidget {
                   Text(
                     "Business",
                     style: TextStyle(
-                        color: AppTheme.primary,
+                        color: AppTheme.secondary,
                         fontSize: 28,
                         fontWeight: FontWeight.bold),
                   ),
@@ -73,7 +73,7 @@ class Profile extends StatelessWidget {
                   Text(
                     "Profile",
                     style: TextStyle(
-                        color: AppTheme.primary,
+                        color: AppTheme.secondary,
                         fontSize: 28,
                         fontWeight: FontWeight.bold),
                   ),
@@ -84,7 +84,7 @@ class Profile extends StatelessWidget {
               ),
               const Center(
                 child: CircleAvatar(
-                  backgroundColor: AppTheme.primary,
+                  backgroundColor: AppTheme.secondary,
                   radius: 48,
                   child: Padding(
                     padding: EdgeInsets.all(4.0),
@@ -125,7 +125,7 @@ class Profile extends StatelessWidget {
               //     padding: const EdgeInsets.symmetric(
               //         vertical: 18.0, horizontal: 16.0),
               //     decoration: BoxDecoration(
-              //         color: AppTheme.gradient,
+              //         color: AppTheme.light,
               //         borderRadius: BorderRadius.circular(12)),
               //     child: Row(
               //       mainAxisAlignment: MainAxisAlignment.start,
@@ -133,7 +133,7 @@ class Profile extends StatelessWidget {
               //       children: const [
               //         Icon(
               //           Icons.person,
-              //           color: AppTheme.primary,
+              //           color: AppTheme.secondary,
               //           size: 28,
               //         ),
               //         SizedBox(
@@ -141,7 +141,7 @@ class Profile extends StatelessWidget {
               //         ),
               //         Text(
               //           "My Account",
-              //           style: TextStyle(color: AppTheme.primary),
+              //           style: TextStyle(color: AppTheme.secondary),
               //         )
               //       ],
               //     ),
@@ -160,7 +160,7 @@ class Profile extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(
                             vertical: 18.0, horizontal: 16.0),
                         decoration: BoxDecoration(
-                            color: AppTheme.gradient,
+                            color: AppTheme.light,
                             borderRadius: BorderRadius.circular(12)),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -168,7 +168,7 @@ class Profile extends StatelessWidget {
                           children: const [
                             Icon(
                               Icons.dashboard_customize_rounded,
-                              color: AppTheme.primary,
+                              color: AppTheme.secondary,
                               size: 28,
                             ),
                             SizedBox(
@@ -176,7 +176,7 @@ class Profile extends StatelessWidget {
                             ),
                             Text(
                               "My Products",
-                              style: TextStyle(color: AppTheme.primary),
+                              style: TextStyle(color: AppTheme.secondary),
                             )
                           ],
                         ),
@@ -196,7 +196,7 @@ class Profile extends StatelessWidget {
                         padding: const EdgeInsets.only(
                             top: 18.0, bottom: 18.0, right: 16.0),
                         decoration: BoxDecoration(
-                            color: AppTheme.gradient,
+                            color: AppTheme.light,
                             borderRadius: BorderRadius.circular(12)),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -208,7 +208,7 @@ class Profile extends StatelessWidget {
                             ),
                             Text(
                               "Notifications",
-                              style: TextStyle(color: AppTheme.primary),
+                              style: TextStyle(color: AppTheme.secondary),
                             )
                           ],
                         ),
@@ -227,7 +227,7 @@ class Profile extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(
                       vertical: 18.0, horizontal: 16.0),
                   decoration: BoxDecoration(
-                      color: AppTheme.gradient,
+                      color: AppTheme.light,
                       borderRadius: BorderRadius.circular(12)),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -235,15 +235,15 @@ class Profile extends StatelessWidget {
                     children: const [
                       Icon(
                         Icons.help_center_rounded,
-                        color: AppTheme.primary,
+                        color: AppTheme.secondary,
                         size: 28,
                       ),
                       SizedBox(
                         width: 24,
                       ),
                       Text(
-                        "Help",
-                        style: TextStyle(color: AppTheme.primary),
+                        "Help & documentation",
+                        style: TextStyle(color: AppTheme.secondary),
                       )
                     ],
                   ),
@@ -256,7 +256,7 @@ class Profile extends StatelessWidget {
                     builder: (context) => BasicDialogAlert(
                       title: const Text(
                         "Logout confirmation",
-                        style: TextStyle(color: AppTheme.primary),
+                        style: TextStyle(color: AppTheme.secondary),
                       ),
                       content: const Text(
                           "Confirm the action to clear login details from the app?"),
@@ -265,7 +265,7 @@ class Profile extends StatelessWidget {
                           title: const Text(
                             "Logout",
                             style: TextStyle(
-                                color: AppTheme.primary, fontSize: 18),
+                                color: AppTheme.secondary, fontSize: 18),
                           ),
                           onPressed: () async {
                             // Make notification read
@@ -283,7 +283,7 @@ class Profile extends StatelessWidget {
                           title: const Text(
                             "Cancel",
                             style: TextStyle(
-                                color: AppTheme.primary, fontSize: 18),
+                                color: AppTheme.secondary, fontSize: 18),
                           ),
                           onPressed: () async {
                             ScaffoldMessenger.of(context).showSnackBar(
@@ -300,7 +300,7 @@ class Profile extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(
                       vertical: 18.0, horizontal: 16.0),
                   decoration: BoxDecoration(
-                      color: AppTheme.gradient,
+                      color: AppTheme.light,
                       borderRadius: BorderRadius.circular(12)),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -308,7 +308,7 @@ class Profile extends StatelessWidget {
                     children: const [
                       Icon(
                         Icons.logout,
-                        color: AppTheme.primary,
+                        color: AppTheme.secondary,
                         size: 28,
                       ),
                       SizedBox(
@@ -316,7 +316,7 @@ class Profile extends StatelessWidget {
                       ),
                       Text(
                         "Logout",
-                        style: TextStyle(color: AppTheme.primary),
+                        style: TextStyle(color: AppTheme.secondary),
                       )
                     ],
                   ),
@@ -340,7 +340,7 @@ class NotificationIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cartProvider = Provider.of<NotificationsProvider>(context);
+    final notificationsProvider = Provider.of<NotificationsProvider>(context);
     return SizedBox(
       width: kToolbarHeight,
       child: Stack(
@@ -349,7 +349,7 @@ class NotificationIcon extends StatelessWidget {
         children: [
           const Icon(
             Icons.notifications,
-            color: AppTheme.primary,
+            color: AppTheme.secondary,
             size: 28,
           ),
           Positioned(
@@ -361,11 +361,11 @@ class NotificationIcon extends StatelessWidget {
               clipBehavior: Clip.antiAlias,
               decoration: const BoxDecoration(
                 shape: BoxShape.circle,
-                color: AppTheme.secondary,
+                color: AppTheme.danger,
               ),
               child: Center(
                 child: Text(
-                  "${cartProvider.items.length}",
+                  "${notificationsProvider.countUnread()}",
                   style: const TextStyle(
                     fontSize: 10,
                     color: Colors.white,

@@ -17,7 +17,7 @@ class NotificationTile extends StatelessWidget {
       // padding: const EdgeInsets.symmetric(horizontal: 16.0),
       margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
       decoration: BoxDecoration(
-        color: AppTheme.gradient,
+        color: AppTheme.light,
         borderRadius: BorderRadius.circular(8.0),
       ),
       child: ListTile(
@@ -27,14 +27,14 @@ class NotificationTile extends StatelessWidget {
             builder: (context) => BasicDialogAlert(
               title: Text(
                 notification.title,
-                style: const TextStyle(color: AppTheme.primary),
+                style: const TextStyle(color: AppTheme.secondary),
               ),
               content: Text(notification.body),
               actions: <Widget>[
                 BasicDialogAction(
                   title: const Text(
                     "OK",
-                    style: TextStyle(color: AppTheme.primary, fontSize: 18),
+                    style: TextStyle(color: AppTheme.secondary, fontSize: 18),
                   ),
                   onPressed: () async {
                     // Make notification read
@@ -55,13 +55,17 @@ class NotificationTile extends StatelessWidget {
           children: [
             Container(
               alignment: Alignment.topLeft,
-              width: 14,
-              height: 14,
+              width: 16,
+              height: 16,
+              padding: const EdgeInsets.all(0.5),
               clipBehavior: Clip.antiAlias,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 shape: BoxShape.circle,
-                color:
-                    notification.read ? AppTheme.secondary : AppTheme.primary,
+                color: AppTheme.secondary,
+              ),
+              child: CircleAvatar(
+                backgroundColor:
+                    notification.read ? AppTheme.white : AppTheme.secondary,
               ),
             ),
           ],
@@ -69,7 +73,7 @@ class NotificationTile extends StatelessWidget {
         title: Text(
           notification.title,
           style: const TextStyle(
-              color: AppTheme.primary,
+              color: AppTheme.secondary,
               fontSize: 18,
               fontWeight: FontWeight.w600),
         ),

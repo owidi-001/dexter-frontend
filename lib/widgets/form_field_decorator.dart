@@ -4,18 +4,20 @@ import 'package:flutter/material.dart';
 InputDecoration buildInputDecoration(String hintText, IconData icon) {
   return InputDecoration(
       prefixIcon: Icon(icon),
+      hoverColor: AppTheme.secondary,
+      focusColor: AppTheme.secondary,
       contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
       hintText: hintText,
       border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10),
-      ));
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(color: AppTheme.secondary)));
 }
 
 Material submitButton(String title, Function() function) {
   return Material(
     elevation: 5,
     borderRadius: const BorderRadius.all(Radius.circular(10)),
-    color: AppTheme.primary,
+    color: AppTheme.secondary,
     child: MaterialButton(
       onPressed: function,
       padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
@@ -42,7 +44,7 @@ OutlinedButton uploadButton(String title, Function() function, IconData icon) {
       minimumSize: const Size(double.infinity, 40),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       textStyle: const TextStyle(
-          color: AppTheme.primary, fontWeight: FontWeight.bold, fontSize: 18),
+          color: AppTheme.secondary, fontWeight: FontWeight.bold, fontSize: 18),
     ),
   );
 }

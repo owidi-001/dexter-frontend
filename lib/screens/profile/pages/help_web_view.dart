@@ -1,4 +1,4 @@
-import 'package:dexter/theme/theme.dart';
+import 'package:dexter/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -26,12 +26,12 @@ class HelpPage extends StatelessWidget {
           },
         ),
       )
-      ..loadRequest(Uri.parse('https://owidi-001.github.io/owidi-portfolio/'));
+      ..loadRequest(Uri.parse('$baseUrl'));
 
     return SafeArea(
       child: Scaffold(
         // appBar: AppBar(
-        //   backgroundColor: AppTheme.primary,
+        //   backgroundColor: AppTheme.secondary,
         //   title: const Text('Help page'),
         // ),
         body: SizedBox(

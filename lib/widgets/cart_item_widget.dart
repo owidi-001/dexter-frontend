@@ -37,7 +37,7 @@ class CartItemWidget extends StatelessWidget {
                       )
                     : Container(
                         decoration: BoxDecoration(
-                            color: AppTheme.primary,
+                            color: AppTheme.secondary,
                             borderRadius: BorderRadius.circular(12)),
                       ),
               )),

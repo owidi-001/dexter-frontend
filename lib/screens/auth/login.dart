@@ -35,6 +35,7 @@ class LoginScreen extends StatelessWidget {
       onSaved: (value) {
         _emailController.value;
       },
+      
       validator: ((value) => validEmail(_emailController.text)),
       textInputAction: TextInputAction.next,
       decoration: buildInputDecoration("Email", Icons.mail),
@@ -195,7 +196,7 @@ class LoginScreen extends StatelessWidget {
                       child: const Text(
                         "Sign Up",
                         style: TextStyle(
-                            color: AppTheme.primary,
+                            color: AppTheme.secondary,
                             fontSize: 18,
                             fontWeight: FontWeight.normal),
                       ),

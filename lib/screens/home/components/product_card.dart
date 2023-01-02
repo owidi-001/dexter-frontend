@@ -26,7 +26,7 @@ class ProductCard extends StatelessWidget {
               height: 180,
               width: 180,
               decoration: BoxDecoration(
-                color: AppTheme.primary,
+                color: AppTheme.light,
                 borderRadius: BorderRadius.circular(16),
               ),
               // child: Hero(
@@ -41,7 +41,7 @@ class ProductCard extends StatelessWidget {
                       )
                     : Container(
                         decoration: BoxDecoration(
-                            color: AppTheme.primary,
+                            color: AppTheme.secondary,
                             borderRadius: BorderRadius.circular(12)),
                       ),
               ),
@@ -50,12 +50,12 @@ class ProductCard extends StatelessWidget {
           const SizedBox(
             height: 8.0,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                width: 80,
+                // width: 80,
                 padding: const EdgeInsets.symmetric(vertical: 16.0 / 4),
                 child: Text(
                   product.name,
@@ -65,7 +65,7 @@ class ProductCard extends StatelessWidget {
               Text(
                 "Sh. ${product.price}",
                 style: const TextStyle(
-                    fontWeight: FontWeight.bold, color: AppTheme.primary),
+                    fontWeight: FontWeight.bold, color: AppTheme.secondary),
               )
             ],
           ),

@@ -26,7 +26,7 @@ class _DetailScreenState extends State<DetailScreen> {
     var cartProvider = Provider.of<CartProvider>(context);
 
     return Scaffold(
-      backgroundColor: AppTheme.primary,
+      backgroundColor: AppTheme.secondary,
       appBar: buildAppBar(context),
       body: SingleChildScrollView(
         child: Column(
@@ -44,7 +44,7 @@ class _DetailScreenState extends State<DetailScreen> {
                     ),
                     // height: 500,
                     decoration: const BoxDecoration(
-                      color: AppTheme.gradient,
+                      color: AppTheme.white,
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(24),
                         topRight: Radius.circular(24),
@@ -68,7 +68,8 @@ class _DetailScreenState extends State<DetailScreen> {
                                         style: const TextStyle(
                                             color: AppTheme.secondary),
                                         children: [
-                                          const TextSpan(text: "Quantity\n"),
+                                          const TextSpan(
+                                              text: "Quantity Available\n"),
                                           TextSpan(
                                             text:
                                                 "${widget.product.quantity} items",
@@ -90,10 +91,11 @@ class _DetailScreenState extends State<DetailScreen> {
                                         style: const TextStyle(
                                             color: AppTheme.secondary),
                                         children: [
-                                          const TextSpan(text: "Size\n"),
+                                          const TextSpan(
+                                              text: "Min Quantity\n"),
                                           TextSpan(
                                             text:
-                                                widget.product.size ?? "Normal",
+                                                "${widget.product.minQuantity} items",
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .headline5!
@@ -231,14 +233,18 @@ class _DetailScreenState extends State<DetailScreen> {
                                   child: widget.product.image
                                           .toString()
                                           .isNotEmpty
-                                      ? Image.memory(
-                                          const Base64Decoder()
-                                              .convert(widget.product.image),
-                                          fit: BoxFit.fill,
+                                      ? Hero(
+                                          tag: "",
+                                          child: Image.memory(
+                                            const Base64Decoder()
+                                                .convert(widget.product.image),
+                                            height: 280,
+                                            fit: BoxFit.contain,
+                                          ),
                                         )
                                       : Container(
                                           decoration: BoxDecoration(
-                                              color: AppTheme.primary,
+                                              color: AppTheme.secondary,
                                               borderRadius:
                                                   BorderRadius.circular(12)),
                                         ))
@@ -259,7 +265,7 @@ class _DetailScreenState extends State<DetailScreen> {
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
-      backgroundColor: AppTheme.primary,
+      backgroundColor: AppTheme.secondary,
       elevation: 0,
       leading: InkWell(
         onTap: () => Navigator.pop(context),
@@ -283,7 +289,7 @@ class _DetailScreenState extends State<DetailScreen> {
         onPressed: press,
         child: Icon(
           icon,
-          color: AppTheme.primary,
+          color: AppTheme.secondary,
         ),
       ),
     );
