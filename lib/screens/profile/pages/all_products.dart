@@ -7,6 +7,7 @@ import 'package:dexter/services/app_service.dart';
 import 'package:dexter/theme/theme.dart';
 import 'package:dexter/widgets/appButtonWidget.dart';
 import 'package:dexter/widgets/form_field_decorator.dart';
+import 'package:dexter/widgets/image_shimmer.dart';
 import 'package:dexter/widgets/show_message_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -76,6 +77,8 @@ class _AllProductsState extends State<AllProducts> {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               TextField(
+                keyboardType: TextInputType.name,
+                textInputAction: TextInputAction.next,
                 controller: _nameController,
                 decoration: buildInputDecoration("Name", Icons.edit),
               ),
@@ -83,6 +86,9 @@ class _AllProductsState extends State<AllProducts> {
                 height: 10,
               ),
               TextField(
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+                textInputAction: TextInputAction.next,
                 controller: _priceController,
                 decoration: buildInputDecoration("Price", Icons.money),
               ),
@@ -90,13 +96,17 @@ class _AllProductsState extends State<AllProducts> {
                 height: 10,
               ),
               TextField(
+                keyboardType: TextInputType.number,
                 controller: _quantityController,
+                textInputAction: TextInputAction.next,
                 decoration: buildInputDecoration("Quantity", Icons.numbers),
               ),
               const SizedBox(
                 height: 10,
               ),
               TextField(
+                keyboardType: TextInputType.number,
+                textInputAction: TextInputAction.next,
                 controller: _minQuantityController,
                 decoration: buildInputDecoration("minQuantity", Icons.numbers),
               ),
@@ -105,6 +115,7 @@ class _AllProductsState extends State<AllProducts> {
               ),
               TextField(
                 controller: _typeController,
+                textInputAction: TextInputAction.done,
                 decoration: buildInputDecoration("Type", Icons.type_specimen),
               ),
               const SizedBox(
@@ -422,17 +433,15 @@ class _AllProductsState extends State<AllProducts> {
                           ClipRRect(
                             borderRadius: BorderRadius.circular(10.0),
                             child: item.image.toString().isNotEmpty
-                                ? Image.memory(
-                                    const Base64Decoder().convert(item.image),
-                                  )
-                                : Container(
-                                    decoration: BoxDecoration(
-                                        color: AppTheme.secondary,
-                                        borderRadius:
-                                            BorderRadius.circular(12)),
-                                  ),
+                                ? Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Image.memory(
+                                      const Base64Decoder().convert(item.image),
+                                    ),
+                                )
+                                : const ImagePlaceholder(),
                           ),
-                          Padding(
+                          Padding(  
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 16.0, vertical: 10.0),
                             child: Text(

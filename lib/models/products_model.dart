@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 class Product {
   int id;
   String name;
@@ -5,7 +7,7 @@ class Product {
   String? size;
   int quantity;
   int minQuantity;
-  String image;
+  String image = "";
   String type;
 
   Product(
@@ -30,7 +32,7 @@ class Product {
         price: json["price"],
         quantity: json["quantity"],
         minQuantity: json["minQuantity"],
-        image: json["image"],
+        image: "",
         type: json["type"]);
   }
 
@@ -42,110 +44,24 @@ class Product {
       "price": product.price,
       "quantity": product.quantity,
       "minQuantity": product.minQuantity,
-      "image": product.image,
+      "image": "",
       "type": product.type
     };
     return data;
   }
+}
 
-  // static List<Product> products = [
-  //   Product(
-  //     id: 1,
-  //     name: "Men Khaki",
-  //     price: 120,
-  //     quantity: 30,
-  //     minQuantity: 5,
-  //     image: "assets/images/trauser.png",
-  //     type: "Trousers",
-  //   ),
-  //   Product(
-  //     id: 2,
-  //     name: "Men Boots",
-  //     price: 120,
-  //     quantity: 30,
-  //     minQuantity: 5,
-  //     image: "assets/images/boot.png",
-  //     type: "Shoes",
-  //   ),
-  //   Product(
-  //     id: 3,
-  //     name: "Women Handbag",
-  //     price: 120,
-  //     quantity: 30,
-  //     minQuantity: 5,
-  //     image: "assets/images/handbag.png",
-  //     type: "Bags",
-  //   ),
-  //   Product(
-  //     id: 4,
-  //     name: "Long Sleeve",
-  //     price: 120,
-  //     quantity: 30,
-  //     minQuantity: 5,
-  //     image: "assets/images/long_sleeve_tee.png",
-  //     type: "Shirts",
-  //   ),
-  //   Product(
-  //     id: 5,
-  //     name: "Short Sleeve",
-  //     price: 120,
-  //     quantity: 30,
-  //     minQuantity: 5,
-  //     image: "assets/images/short_sleeve_tee.png",
-  //     type: "Shirts",
-  //   ),
-  //   Product(
-  //     id: 6,
-  //     name: "Men Khaki",
-  //     price: 120,
-  //     quantity: 30,
-  //     minQuantity: 5,
-  //     image: "assets/images/user.png",
-  //     type: "Trousers",
-  //   ),
-  //   Product(
-  //     id: 7,
-  //     name: "Men Khaki",
-  //     price: 120,
-  //     quantity: 30,
-  //     minQuantity: 5,
-  //     image: "assets/images/user.png",
-  //     type: "Trousers",
-  //   ),
-  //   Product(
-  //     id: 8,
-  //     name: "Men Khaki",
-  //     price: 120,
-  //     quantity: 30,
-  //     minQuantity: 5,
-  //     image: "assets/images/user.png",
-  //     type: "Trousers",
-  //   ),
-  //   Product(
-  //     id: 9,
-  //     name: "Men Khaki",
-  //     price: 120,
-  //     quantity: 30,
-  //     minQuantity: 5,
-  //     image: "assets/images/user.png",
-  //     type: "Trousers",
-  //   ),
-  //   Product(
-  //     id: 10,
-  //     name: "Men Khaki",
-  //     price: 120,
-  //     quantity: 30,
-  //     minQuantity: 5,
-  //     image: "assets/images/user.png",
-  //     type: "Trousers",
-  //   ),
-  // ];
+class ProductImage {
+  int id;
+  int product;
+  String image;
 
-// // Find product category by id
-//   getCategory() {
-//     return ProductCategory.productCategories
-//         .where((element) => element.id == type)
-//         .toList()[0]
-//         .name;
-//   }
+  ProductImage({required this.id, required this.product, required this.image});
+
+  // factory from json
+  factory ProductImage.fromJson(Map<String, dynamic> json) {
+
+    return ProductImage(
+        id: json["id"], product: json["product"], image: json["image"]);
+  }
 }

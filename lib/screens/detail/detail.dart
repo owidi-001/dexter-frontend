@@ -230,24 +230,25 @@ class _DetailScreenState extends State<DetailScreen> {
                               ),
                               const SizedBox(width: 50.0),
                               Expanded(
-                                  child: widget.product.image
-                                          .toString()
-                                          .isNotEmpty
-                                      ? Hero(
-                                          tag: "",
-                                          child: Image.memory(
-                                            const Base64Decoder()
-                                                .convert(widget.product.image),
-                                            height: 280,
-                                            fit: BoxFit.contain,
-                                          ),
-                                        )
-                                      : Container(
-                                          decoration: BoxDecoration(
-                                              color: AppTheme.secondary,
-                                              borderRadius:
-                                                  BorderRadius.circular(12)),
-                                        ))
+                                child: widget.product.image
+                                        .toString()
+                                        .isNotEmpty
+                                    ? Hero(
+                                        tag: "",
+                                        child: Image.memory(
+                                          const Base64Decoder()
+                                              .convert(widget.product.image),
+                                          height: 280,
+                                          fit: BoxFit.contain,
+                                        ),
+                                      )
+                                    : Container(
+                                        decoration: BoxDecoration(
+                                            color: AppTheme.secondary,
+                                            borderRadius:
+                                                BorderRadius.circular(12)),
+                                        child: const CircularProgressIndicator()),
+                              ),
                             ],
                           )
                         ],

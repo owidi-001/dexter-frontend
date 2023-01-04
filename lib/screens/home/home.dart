@@ -5,7 +5,6 @@ import 'package:dexter/screens/home/components/body.dart';
 import 'package:dexter/screens/home/components/category_filter.dart';
 import 'package:dexter/screens/home/components/product_card.dart';
 import 'package:dexter/theme/theme.dart';
-import 'package:dexter/utils/greetings.utility.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -26,7 +25,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     var productsProvider = Provider.of<ProductProvider>(context);
-    allProducts = productsProvider.products;
+
+    setState(() {
+      allProducts = productsProvider.products;
+    });
 
     products = categoryFilter(allProducts, categories[selectedIndex]);
 

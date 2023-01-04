@@ -39,6 +39,13 @@ class AppService {
           der: (data) =>
               data.map<Product>((json) => Product.fromJson(json)).toList());
 
+  // fetch product images
+  Future<HttpResult<List<ProductImage>>> fetchProductImages() =>
+      HttpClient.get2<List<ProductImage>>(APIRoutes.productImages,
+          der: (data) => data
+              .map<ProductImage>((json) => ProductImage.fromJson(json))
+              .toList());
+
   // Create new product
   Future<HttpResult<Product>> productCreate(
           {required Map<String, dynamic> data}) =>

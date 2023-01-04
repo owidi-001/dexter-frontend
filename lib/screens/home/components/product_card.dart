@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dexter/models/products_model.dart';
 import 'package:dexter/theme/theme.dart';
+import 'package:dexter/widgets/image_shimmer.dart';
 import 'package:flutter/material.dart';
 
 class ProductCard extends StatelessWidget {
@@ -20,33 +21,34 @@ class ProductCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Expanded(
-            child: Container(
-              padding: const EdgeInsets.all(16.0),
-              height: 180,
-              width: 180,
-              decoration: BoxDecoration(
-                color: AppTheme.light,
-                borderRadius: BorderRadius.circular(16),
-              ),
-              // child: Hero(
-              //   tag: "${product.id}",
-              //   child: Image.asset(product.image),
-              // ),
-              child: Hero(
-                tag: "${product.id}",
-                child: product.image.toString().isNotEmpty
-                    ? Image.memory(
-                        const Base64Decoder().convert(product.image),
-                      )
-                    : Container(
-                        decoration: BoxDecoration(
-                            color: AppTheme.secondary,
-                            borderRadius: BorderRadius.circular(12)),
-                      ),
-              ),
-            ),
-          ),
+          product.image.toString().isNotEmpty
+              ? Expanded(
+                  child: Container(
+                    padding: const EdgeInsets.all(16.0),
+                    height: 180,
+                    width: 180,
+                    decoration: BoxDecoration(
+                      color: AppTheme.light,
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Hero(
+                        tag: "${product.id}",
+                        child: Image.memory(
+                          const Base64Decoder().convert(product.image),
+                        )),
+                  ),
+                )
+              : Expanded(
+                  child: Container(
+                    height: 180,
+                    width: 180,
+                    decoration: BoxDecoration(
+                      color: AppTheme.light,
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: const ImagePlaceholder(),
+                  ),
+                ),
           const SizedBox(
             height: 8.0,
           ),

@@ -5,7 +5,10 @@ import 'package:flutter/foundation.dart';
 
 class ProductProvider extends ChangeNotifier {
   List<Product> _products = [];
+  List<ProductImage> _images = [];
+
   LoadingStatus status = LoadingStatus.unknown;
+  LoadingStatus imageStatus = LoadingStatus.unknown;
 
   List<Product> get products => _products;
 
@@ -13,6 +16,7 @@ class ProductProvider extends ChangeNotifier {
   ProductProvider() {
     status = LoadingStatus.unknown;
     _initFetch();
+    // _initFetchImages();
   }
 
   setProducts(List<Product> notifications) {
@@ -29,6 +33,39 @@ class ProductProvider extends ChangeNotifier {
     }, success: (data) {
       setProducts(data);
       status = LoadingStatus.loadingSuccess;
+    });
+
+    notifyListeners();
+
+    if (status == LoadingStatus.loadingSuccess) {
+      await initFetchImages();
+    }
+  }
+
+  // fetch products
+  Future<void> initFetchImages() async {
+    final res = await AppService().fetchProductImages();
+
+    res.when(error: (error) {
+      if (kDebugMode) {
+        print(error.message);
+      }
+      imageStatus = LoadingStatus.loadingFailure;
+    }, success: (data) {
+      _images = data;
+      imageStatus = LoadingStatus.loadingSuccess;
+
+      // Set product images
+      if (imageStatus == LoadingStatus.loadingSuccess) {
+        for (Product product in _products) {
+          for (ProductImage image in _images) {
+            if (product.id == image.product) {
+              product.image = image.image;
+              break;
+            }
+          }
+        }
+      }
     });
 
     notifyListeners();
