@@ -1,7 +1,7 @@
-const String baseUrl = "http://192.168.1.157:8000"; // for development
+// const String baseUrl = "http://192.168.1.157:8000"; // for development
 /// endpoint 4 the api
 // const String baseUrl = "https://web-production-f123.up.railway.app/"; // Limited and had db issues
-// const String baseUrl = "https://osumbadexter.pythonanywhere.com";
+const String baseUrl = "https://osumbadexter.pythonanywhere.com";
 
 class APIRoutes {
   // static String user = "$baseUrl/user";
