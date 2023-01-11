@@ -31,30 +31,20 @@ class _DetailScreenState extends State<DetailScreen> {
       backgroundColor: AppTheme.secondary,
       appBar: AppBar(
           elevation: 0, backgroundColor: AppTheme.secondary, actions: []),
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            const SizedBox(
-              height: 24,
-            ),
-            Container(
-              height: size.height * 0.4,
+      body: Column(
+        children: <Widget>[
+          const SizedBox(
+            height: 24,
+          ),
+          Expanded(
+            child: Container(
               padding: const EdgeInsets.symmetric(vertical: 16.0),
               decoration: BoxDecoration(
                 color: AppTheme.secondary,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: widget.product.image.toString().isNotEmpty
-                  ? 
-                  // Hero(
-                  //     tag: "",
-                  //     child: Image.memory(
-                  //       const Base64Decoder().convert(widget.product.image),
-                  //       height: 280,
-                  //       fit: BoxFit.contain,
-                  //     ),
-                  //   )
-                  Hero(
+                  ? Hero(
                       tag: "",
                       child: Image.network(
                         "$baseUrl${widget.product.image}",
@@ -68,7 +58,10 @@ class _DetailScreenState extends State<DetailScreen> {
                           borderRadius: BorderRadius.circular(12)),
                       child: const ImagePlaceholder()),
             ),
-            Container(
+          ),
+          Expanded(
+            child: Container(
+              alignment: Alignment.bottomCenter,
               padding: EdgeInsets.only(
                 top: size.height * 0.05,
                 left: 16,
@@ -233,31 +226,27 @@ class _DetailScreenState extends State<DetailScreen> {
                   ),
 
                   // Add to cart button
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
-                    child: Expanded(
-                        child: AppButtonWidget(
-                      title: "Add to cart",
-                      onPressedCallBack: () {
-                        // check if item in cart
-                        cartProvider.add(
-                          CartItemModel(
-                              product: widget.product, quantity: numOfItems),
-                        );
+                  AppButtonWidget(
+                    title: "Add to cart",
+                    onPressedCallBack: () {
+                      // check if item in cart
+                      cartProvider.add(
+                        CartItemModel(
+                            product: widget.product, quantity: numOfItems),
+                      );
 
-                        // add item confirmation
-                        ScaffoldMessenger.of(context).showSnackBar(snackMessage(
-                            true, "${widget.product.name} added to cart"));
+                      // add item confirmation
+                      ScaffoldMessenger.of(context).showSnackBar(snackMessage(
+                          true, "${widget.product.name} added to cart"));
 
-                        Navigator.pop(context);
-                      },
-                    )),
+                      Navigator.pop(context);
+                    },
                   )
                 ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

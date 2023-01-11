@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dexter/models/cart_model.dart';
 import 'package:dexter/providers/cart_provider.dart';
 import 'package:dexter/theme/theme.dart';
+import 'package:dexter/utils/constants.dart';
 import 'package:dexter/widgets/build_counter_widget.dart';
 import 'package:dexter/widgets/show_message_widget.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +38,7 @@ class CartItemWidget extends StatelessWidget {
                     //     fit: BoxFit.fill,
                     //   )
                     Image.network(
-                        item.product.image,
+                        "$baseUrl${item.product.image}",
                         fit: BoxFit.fill,
                       )
                     : Container(

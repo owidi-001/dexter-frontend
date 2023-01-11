@@ -14,6 +14,7 @@ class HelpPage extends StatelessWidget {
         NavigationDelegate(
           onProgress: (int progress) {
             // Update loading bar.
+            
           },
           onPageStarted: (String url) {},
           onPageFinished: (String url) {},
@@ -26,7 +27,7 @@ class HelpPage extends StatelessWidget {
           },
         ),
       )
-      ..loadRequest(Uri.parse('$baseUrl'));
+      ..loadRequest(Uri.parse(baseUrl));
 
     return SafeArea(
       child: Scaffold(
