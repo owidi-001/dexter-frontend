@@ -14,7 +14,7 @@ class APIRoutes {
       "$baseUrl/user/password/password_change/";
 
   static String products = "$baseUrl/products/";
-  static String productImages = "$baseUrl/products/images";
+
   static String cart = "$baseUrl/cart/";
   static String notifications = "$baseUrl/notifications/";
 }

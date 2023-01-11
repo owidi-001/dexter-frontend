@@ -32,11 +32,6 @@ class ProductCard extends StatelessWidget {
                       color: AppTheme.light,
                       borderRadius: BorderRadius.circular(16),
                     ),
-                    // child: Hero(
-                    //     tag: "${product.id}",
-                    //     child: Image.memory(
-                    //       const Base64Decoder().convert(product.image),
-                    //     )),
                     child: Hero(
                         tag: "${product.id}",
                         child: Image.network(

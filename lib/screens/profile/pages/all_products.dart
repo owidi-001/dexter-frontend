@@ -253,18 +253,6 @@ class _AllProductsState extends State<AllProducts> {
   // Insert a new product to the database
   Future<void> _addProduct() async {
     if (image != null) {
-      // convert image to base64
-      // String imageData = "";
-
-      File imagefile = File(image!.path); //convert Path to File
-      // Uint8List imagebytes = await imagefile.readAsBytes(); //convert to bytes
-      // imageData = base64.encode(imagebytes); //convert bytes to base64 string
-
-      // if (kDebugMode) {
-      //   print("The picked image is");
-      //   print(imageData);
-      // }
-
       // Create function
       Map<String, String> data = {
         'name': _nameController.text,
@@ -274,11 +262,6 @@ class _AllProductsState extends State<AllProducts> {
         'type': _typeController.text,
         // 'image': imageData
       };
-
-      // if (kDebugMode) {
-      //   print("pre post");
-      //   print(data);
-      // }
 
       // var response = await AppService().productCreate(data: data);
       var response = await AppService().productCreate(image!.path, data);
@@ -292,80 +275,35 @@ class _AllProductsState extends State<AllProducts> {
         ScaffoldMessenger.of(context).showSnackBar(snackMessage(
             false, 'An error occurred when creating the product!'));
       }
-
-      //   response.when(error: (error) {
-      //     // if (kDebugMode) {
-      //     //   print("An error occured");
-      //     //   print(error.message);
-      //     // }
-
-      //     ScaffoldMessenger.of(context).showSnackBar(snackMessage(
-      //         false, 'An error occurred when creating the product!'));
-      //   }, success: (data) {
-      //     // if (kDebugMode) {
-      //     //   print("It was successful");
-      //     //   print(data);
-      //     // }
-      //     ScaffoldMessenger.of(context)
-      //         .showSnackBar(snackMessage(true, 'Product created successfully!'));
-
-      //     Provider.of<ProductProvider>(context, listen: false).refresh();
-      //     Navigator.pop(context);
-      //   });
-      // } else {
-      //   ScaffoldMessenger.of(context)
-      //       .showSnackBar(snackMessage(false, 'No image selected!'));
     }
   }
 
-  // Update an existing journal
+  // Update an existing product
   Future<void> _updateMenu(int id) async {
-    // convert image to base64
-    String imageData = "empty";
-
-    if (image != null) {
-      File imagefile = File(image!.path); //convert Path to File
-      Uint8List imagebytes = await imagefile.readAsBytes(); //convert to bytes
-      imageData = base64.encode(imagebytes); //convert bytes to base64 string
-
-      // if (kDebugMode) {
-      //   print("The picked image is");
-      //   print(imageData);
-      // }
-    }
-
     // Update function
-    Map<String, dynamic> data = {
-      'product': id,
+    Map<String, String> data = {
+      'product': "$id",
       'name': _nameController.text,
       'price': _priceController.text,
       'quantity': _quantityController.text,
       'minQuantity': _minQuantityController.text,
-      'type': _typeController.text,
-      'image': imageData
+      'type': _typeController.text
     };
 
-    var response = await AppService().productUpdate(data: data);
+    var response = await AppService()
+        .productUpdate(image != null ? image!.path : "", data);
 
-    response.when(error: (error) {
-      // if (kDebugMode) {
-      //   print("An error occured");
-      //   print(error.message);
-      // }
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('An error occurred when updating product!'),
-      ));
-    }, success: (data) {
-      // if (kDebugMode) {
-      //   print("It was successful");
-      //   print(data);
-      // }
-      ScaffoldMessenger.of(context).showSnackBar(
-          snackMessage(false, '${data.name} updated successfully!'));
+    if (response.statusCode == 202) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(snackMessage(false, 'Product updated successfully!'));
 
       Provider.of<ProductProvider>(context, listen: false).refresh();
       Navigator.pop(context);
-    });
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('An error occurred when updating product!'),
+      ));
+    }
   }
 
   // Delete an item
