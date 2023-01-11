@@ -4,7 +4,9 @@ import 'package:dexter/models/cart_model.dart';
 import 'package:dexter/models/products_model.dart';
 import 'package:dexter/providers/cart_provider.dart';
 import 'package:dexter/theme/theme.dart';
+import 'package:dexter/utils/constants.dart';
 import 'package:dexter/widgets/appButtonWidget.dart';
+import 'package:dexter/widgets/image_shimmer.dart';
 import 'package:dexter/widgets/show_message_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -43,10 +45,19 @@ class _DetailScreenState extends State<DetailScreen> {
                 borderRadius: BorderRadius.circular(12),
               ),
               child: widget.product.image.toString().isNotEmpty
-                  ? Hero(
+                  ? 
+                  // Hero(
+                  //     tag: "",
+                  //     child: Image.memory(
+                  //       const Base64Decoder().convert(widget.product.image),
+                  //       height: 280,
+                  //       fit: BoxFit.contain,
+                  //     ),
+                  //   )
+                  Hero(
                       tag: "",
-                      child: Image.memory(
-                        const Base64Decoder().convert(widget.product.image),
+                      child: Image.network(
+                        "$baseUrl${widget.product.image}",
                         height: 280,
                         fit: BoxFit.contain,
                       ),
@@ -55,7 +66,7 @@ class _DetailScreenState extends State<DetailScreen> {
                       decoration: BoxDecoration(
                           color: AppTheme.secondary,
                           borderRadius: BorderRadius.circular(12)),
-                      child: const CircularProgressIndicator()),
+                      child: const ImagePlaceholder()),
             ),
             Container(
               padding: EdgeInsets.only(

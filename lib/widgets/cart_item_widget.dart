@@ -31,8 +31,13 @@ class CartItemWidget extends StatelessWidget {
                     borderRadius: BorderRadius.all(Radius.circular(12))),
                 alignment: Alignment.center,
                 child: item.product.image.toString().isNotEmpty
-                    ? Image.memory(
-                        const Base64Decoder().convert(item.product.image),
+                    ?
+                    // Image.memory(
+                    //     const Base64Decoder().convert(item.product.image),
+                    //     fit: BoxFit.fill,
+                    //   )
+                    Image.network(
+                        item.product.image,
                         fit: BoxFit.fill,
                       )
                     : Container(

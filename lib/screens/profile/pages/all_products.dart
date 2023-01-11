@@ -5,6 +5,7 @@ import 'package:dexter/models/products_model.dart';
 import 'package:dexter/providers/product_provider.dart';
 import 'package:dexter/services/app_service.dart';
 import 'package:dexter/theme/theme.dart';
+import 'package:dexter/utils/constants.dart';
 import 'package:dexter/widgets/appButtonWidget.dart';
 import 'package:dexter/widgets/form_field_decorator.dart';
 import 'package:dexter/widgets/image_shimmer.dart';
@@ -253,11 +254,11 @@ class _AllProductsState extends State<AllProducts> {
   Future<void> _addProduct() async {
     if (image != null) {
       // convert image to base64
-      String imageData = "";
+      // String imageData = "";
 
       File imagefile = File(image!.path); //convert Path to File
-      Uint8List imagebytes = await imagefile.readAsBytes(); //convert to bytes
-      imageData = base64.encode(imagebytes); //convert bytes to base64 string
+      // Uint8List imagebytes = await imagefile.readAsBytes(); //convert to bytes
+      // imageData = base64.encode(imagebytes); //convert bytes to base64 string
 
       // if (kDebugMode) {
       //   print("The picked image is");
@@ -265,13 +266,13 @@ class _AllProductsState extends State<AllProducts> {
       // }
 
       // Create function
-      Map<String, dynamic> data = {
+      Map<String, String> data = {
         'name': _nameController.text,
         'price': _priceController.text,
         'quantity': _quantityController.text,
         'minQuantity': _minQuantityController.text,
         'type': _typeController.text,
-        'image': imageData
+        // 'image': imageData
       };
 
       // if (kDebugMode) {
@@ -279,30 +280,41 @@ class _AllProductsState extends State<AllProducts> {
       //   print(data);
       // }
 
-      var response = await AppService().productCreate(data: data);
-
-      response.when(error: (error) {
-        // if (kDebugMode) {
-        //   print("An error occured");
-        //   print(error.message);
-        // }
-
-        ScaffoldMessenger.of(context).showSnackBar(snackMessage(
-            false, 'An error occurred when creating the product!'));
-      }, success: (data) {
-        // if (kDebugMode) {
-        //   print("It was successful");
-        //   print(data);
-        // }
+      // var response = await AppService().productCreate(data: data);
+      var response = await AppService().productCreate(image!.path, data);
+      if (response.statusCode == 201) {
         ScaffoldMessenger.of(context)
             .showSnackBar(snackMessage(true, 'Product created successfully!'));
 
         Provider.of<ProductProvider>(context, listen: false).refresh();
         Navigator.pop(context);
-      });
-    } else {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(snackMessage(false, 'No image selected!'));
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(snackMessage(
+            false, 'An error occurred when creating the product!'));
+      }
+
+      //   response.when(error: (error) {
+      //     // if (kDebugMode) {
+      //     //   print("An error occured");
+      //     //   print(error.message);
+      //     // }
+
+      //     ScaffoldMessenger.of(context).showSnackBar(snackMessage(
+      //         false, 'An error occurred when creating the product!'));
+      //   }, success: (data) {
+      //     // if (kDebugMode) {
+      //     //   print("It was successful");
+      //     //   print(data);
+      //     // }
+      //     ScaffoldMessenger.of(context)
+      //         .showSnackBar(snackMessage(true, 'Product created successfully!'));
+
+      //     Provider.of<ProductProvider>(context, listen: false).refresh();
+      //     Navigator.pop(context);
+      //   });
+      // } else {
+      //   ScaffoldMessenger.of(context)
+      //       .showSnackBar(snackMessage(false, 'No image selected!'));
     }
   }
 
@@ -434,14 +446,17 @@ class _AllProductsState extends State<AllProducts> {
                             borderRadius: BorderRadius.circular(10.0),
                             child: item.image.toString().isNotEmpty
                                 ? Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Image.memory(
-                                      const Base64Decoder().convert(item.image),
+                                    padding: const EdgeInsets.all(8.0),
+                                    // child: Image.memory(
+                                    //     const Base64Decoder().convert(item.image),
+                                    //   ),
+                                    child: Image.network(
+                                      "$baseUrl${item.image}",
                                     ),
-                                )
+                                  )
                                 : const ImagePlaceholder(),
                           ),
-                          Padding(  
+                          Padding(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 16.0, vertical: 10.0),
                             child: Text(

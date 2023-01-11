@@ -32,7 +32,7 @@ class Product {
         price: json["price"],
         quantity: json["quantity"],
         minQuantity: json["minQuantity"],
-        image: "",
+        image: json["image"],
         type: json["type"]);
   }
 
@@ -44,24 +44,23 @@ class Product {
       "price": product.price,
       "quantity": product.quantity,
       "minQuantity": product.minQuantity,
-      "image": "",
+      "image": product.image,
       "type": product.type
     };
     return data;
   }
 }
 
-class ProductImage {
-  int id;
-  int product;
-  String image;
+// class ProductImage {
+//   int id;
+//   int product;
+//   String image;
 
-  ProductImage({required this.id, required this.product, required this.image});
+//   ProductImage({required this.id, required this.product, required this.image});
 
-  // factory from json
-  factory ProductImage.fromJson(Map<String, dynamic> json) {
-
-    return ProductImage(
-        id: json["id"], product: json["product"], image: json["image"]);
-  }
-}
+//   // factory from json
+//   factory ProductImage.fromJson(Map<String, dynamic> json) {
+//     return ProductImage(
+//         id: json["id"], product: json["product"], image: json["image"]);
+//   }
+// }
