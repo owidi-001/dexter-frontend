@@ -5,6 +5,7 @@ import 'package:dexter/screens/home/components/body.dart';
 import 'package:dexter/screens/home/components/category_filter.dart';
 import 'package:dexter/screens/home/components/product_card.dart';
 import 'package:dexter/theme/theme.dart';
+import 'package:dexter/utils/status.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -125,26 +126,61 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
 
-          // Body of product cards
-          productsProvider.products.isNotEmpty
-              ? Body(
-                  products: products,
-                )
-              : Container(
-                  height: MediaQuery.of(context).size.height * 0.3,
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 16.0, horizontal: 16),
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                      color: AppTheme.light,
-                      borderRadius: BorderRadius.circular(12.0)),
-                  child: const Center(
-                    child: Text(
-                      "You have not added any products yet!",
-                      style: TextStyle(color: AppTheme.secondary, fontSize: 20),
+          // Check if products status is loaded
+          productsProvider.status == LoadingStatus.loadingSuccess
+              ?
+              // Body of product cards
+              productsProvider.products.isNotEmpty
+                  ? Body(
+                      products: products,
+                    )
+                  : Container(
+                      height: MediaQuery.of(context).size.height * 0.3,
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 16.0, horizontal: 16),
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                          color: AppTheme.light,
+                          borderRadius: BorderRadius.circular(12.0)),
+                      child: const Center(
+                        child: Text(
+                          "You have not added any products yet!",
+                          style: TextStyle(
+                              color: AppTheme.secondary, fontSize: 20),
+                        ),
+                      ),
+                    )
+              : productsProvider.status == LoadingStatus.loadingFailure
+                  ? Container(
+                      height: MediaQuery.of(context).size.height * 0.3,
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 16.0, horizontal: 16),
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                          color: AppTheme.light,
+                          borderRadius: BorderRadius.circular(12.0)),
+                      child: const Center(
+                        child: Text(
+                          "There was an error loading products!",
+                          style: TextStyle(
+                              color: AppTheme.secondary, fontSize: 20),
+                        ),
+                      ),
+                    )
+                  : Container(
+                      height: MediaQuery.of(context).size.height * 0.3,
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 16.0, horizontal: 16),
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                          color: AppTheme.light,
+                          borderRadius: BorderRadius.circular(12.0)),
+                      child: const Center(
+                        child: CircularProgressIndicator(
+                          color: AppTheme.secondary,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
           const SizedBox(
             height: 48,
           ),
