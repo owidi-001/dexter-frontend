@@ -7,8 +7,8 @@ import 'package:flutter_dialogs/flutter_dialogs.dart';
 import 'package:provider/provider.dart';
 
 class NotificationTile extends StatelessWidget {
-  AppNotification notification;
-  NotificationTile({super.key, required this.notification});
+  final AppNotification notification;
+  const NotificationTile({super.key, required this.notification});
 
   @override
   Widget build(BuildContext context) {

@@ -2,7 +2,6 @@ import 'package:dexter/models/exception.dart';
 import 'package:dexter/utils/constants.dart';
 import 'package:dexter/utils/prefs.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 
 class HttpClient {
   static Dio dio = Dio(BaseOptions(baseUrl: baseUrl))

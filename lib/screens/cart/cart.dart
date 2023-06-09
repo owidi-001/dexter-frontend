@@ -6,7 +6,6 @@ import 'package:dexter/widgets/appButtonWidget.dart';
 import 'package:dexter/widgets/cart_item_widget.dart';
 import 'package:dexter/widgets/show_message_widget.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

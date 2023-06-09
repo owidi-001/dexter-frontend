@@ -2,10 +2,10 @@ import 'package:dexter/theme/theme.dart';
 import 'package:flutter/material.dart';
 
 class AppButtonWidget extends StatelessWidget {
-  String title;
-  Color? background;
-  Function() onPressedCallBack;
-  AppButtonWidget(
+  final String title;
+  final Color? background;
+  final Function() onPressedCallBack;
+  const AppButtonWidget(
       {super.key,
       required this.title,
       required this.onPressedCallBack,

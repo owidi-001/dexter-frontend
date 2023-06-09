@@ -5,18 +5,18 @@ import 'package:flutter/foundation.dart';
 
 class ProductProvider extends ChangeNotifier {
   List<Product> _products = [];
-  // List<ProductImage> _images = [];
 
-  LoadingStatus status = LoadingStatus.unknown;
+  LoadingStatus status = LoadingStatus.loading;
   LoadingStatus imageStatus = LoadingStatus.unknown;
+
+  String? errorMsg;
 
   List<Product> get products => _products;
 
   // Constructor
   ProductProvider() {
-    status = LoadingStatus.unknown;
+    status = LoadingStatus.loading;
     _initFetch();
-    // _initFetchImages();
   }
 
   setProducts(List<Product> notifications) {
@@ -30,6 +30,7 @@ class ProductProvider extends ChangeNotifier {
 
     res.when(error: (error) {
       status = LoadingStatus.loadingFailure;
+      errorMsg = error.message;
     }, success: (data) {
       setProducts(data);
       status = LoadingStatus.loadingSuccess;

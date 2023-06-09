@@ -13,6 +13,8 @@ import 'package:provider/provider.dart';
 List<Product> allProducts = [];
 
 class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -54,19 +56,21 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           actions: [
             InkWell(
-                onTap: (() {
-                  showSearch(
-                    context: context,
-                    delegate: CustomSearchDelegate(),
-                  );
-                }),
-                child: const CircleAvatar(
-                    backgroundColor: AppTheme.light,
-                    child: Icon(
-                      CupertinoIcons.search_circle_fill,
-                      color: AppTheme.secondary,
-                      size: 28,
-                    ))),
+              onTap: (() {
+                showSearch(
+                  context: context,
+                  delegate: CustomSearchDelegate(),
+                );
+              }),
+              child: const CircleAvatar(
+                backgroundColor: AppTheme.light,
+                child: Icon(
+                  CupertinoIcons.search_circle_fill,
+                  color: AppTheme.secondary,
+                  size: 28,
+                ),
+              ),
+            ),
             const SizedBox(
               width: 18,
             )

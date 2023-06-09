@@ -4,9 +4,9 @@ import 'package:dexter/screens/home/components/product_card.dart';
 import 'package:flutter/material.dart';
 
 class Body extends StatelessWidget {
-  List<Product> products;
+  final List<Product> products;
 
-  Body({super.key, required this.products});
+  const Body({super.key, required this.products});
 
   @override
   Widget build(BuildContext context) {

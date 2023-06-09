@@ -1,5 +1,3 @@
-import 'dart:convert';
-import 'dart:io';
 
 import 'package:dexter/models/products_model.dart';
 import 'package:dexter/providers/product_provider.dart';
@@ -11,7 +9,6 @@ import 'package:dexter/widgets/form_field_decorator.dart';
 import 'package:dexter/widgets/image_shimmer.dart';
 import 'package:dexter/widgets/show_message_widget.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_masonry_view/flutter_masonry_view.dart';
 import 'package:image_picker/image_picker.dart';
